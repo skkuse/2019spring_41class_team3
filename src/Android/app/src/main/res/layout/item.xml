@@ -9,7 +9,8 @@
         android:id="@+id/helloText"
         android:textSize="40sp"
         android:textColor="@android:color/white"
-        android:background="#E339"
+        android:background="@color/colorPrimaryDark"
+        android:fontFamily="@font/hanna"
         android:gravity="center"
         tools:text="Hello"
         android:layout_width="match_parent"
@@ -21,7 +22,7 @@
         android:layout_width="20dp"
         android:layout_height="20dp"
         android:layout_margin="10dp"
-        android:background="#A5F" />
+        android:background="@color/colorPrimaryDark" />
 
     <View
         android:id="@+id/item_swipe_right_indicator"
@@ -30,6 +31,6 @@
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="right"
-        android:background="#5AF" />
+        android:background="@color/colorPrimaryDark" />
 
 </FrameLayout>
