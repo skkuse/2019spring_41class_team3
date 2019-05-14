@@ -14,7 +14,8 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends AppCompatActivity
-        implements AccountActivity.OnFragmentInteractionListener, DiscoveryActivity.OnFragmentInteractionListener, RecommedationActivity.OnFragmentInteractionListener {
+        //implements AccountActivity.OnFragmentInteractionListener, RecommedationActivity.OnFragmentInteractionListener
+        {
 
 
     @Override
@@ -22,6 +23,8 @@ public class MainActivity extends AppCompatActivity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+
+        /*
 
         navigation.setItemIconTintList(null);
 
@@ -93,6 +96,8 @@ public class MainActivity extends AppCompatActivity
         }
 
     }
+    */
 
 
+    }
 }
