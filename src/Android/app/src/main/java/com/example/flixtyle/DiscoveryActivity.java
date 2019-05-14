@@ -61,10 +61,6 @@ public class DiscoveryActivity extends AppCompatActivity {
                 Toast.makeText(DiscoveryActivity.this, "right",Toast.LENGTH_SHORT ).show();
             }
 
-            @Override
-            public void onTopCardExit(Object dataObject) {
-                Toast.makeText(DiscoveryActivity.this, "top",Toast.LENGTH_SHORT ).show();
-            }
 
 
             @Override
