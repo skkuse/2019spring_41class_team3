@@ -3,5 +3,5 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".recommedation"
+    tools:context=".RecommedationActivity"
     android:background="#fceae6"/>
