@@ -37,7 +37,7 @@
 
             <ImageView
                 android:id="@+id/bh_image"
-                app:srcCompat="@drawable/Flixtyle"
+                app:srcCompat="@drawable/flixtyle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
