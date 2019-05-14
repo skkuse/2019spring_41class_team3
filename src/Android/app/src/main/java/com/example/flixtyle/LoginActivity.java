@@ -15,24 +15,25 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        Button button = (Button) findViewById(R.id.email_sign_in_button);
-
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                startActivity(intent);
-
-
-            }
-        });
-        Button button2 = (Button) findViewById(R.id.email_sign_up_button);
+        Button button2 = (Button) findViewById(R.id.signup_button);
 
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        Button button = (Button) findViewById(R.id.login_button);
+
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, DiscoveryActivity.class);
+                startActivity(intent);
+
+
             }
         });
     }
