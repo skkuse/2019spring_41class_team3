@@ -12,12 +12,12 @@ import android.view.ViewGroup;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link recommedation.OnFragmentInteractionListener} interface
+ * {@link AccountActivity.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link recommedation#newInstance} factory method to
+ * Use the {@link AccountActivity#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class recommedation extends Fragment {
+public class AccountActivity extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -29,7 +29,7 @@ public class recommedation extends Fragment {
 
     private OnFragmentInteractionListener mListener;
 
-    public recommedation() {
+    public AccountActivity() {
         // Required empty public constructor
     }
 
@@ -39,11 +39,11 @@ public class recommedation extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment recommedation.
+     * @return A new instance of fragment AccountActivity.
      */
     // TODO: Rename and change types and number of parameters
-    public static recommedation newInstance(String param1, String param2) {
-        recommedation fragment = new recommedation();
+    public static AccountActivity newInstance(String param1, String param2) {
+        AccountActivity fragment = new AccountActivity();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -64,7 +64,7 @@ public class recommedation extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recommedation, container, false);
+        return inflater.inflate(R.layout.fragment_account, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

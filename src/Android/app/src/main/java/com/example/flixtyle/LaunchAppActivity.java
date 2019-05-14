@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 
-public class LaunchApp extends AppCompatActivity {
+public class LaunchAppActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -15,7 +15,7 @@ public class LaunchApp extends AppCompatActivity {
         Handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent i = new Intent(LaunchApp.this, LoginActivity.class);
+                Intent i = new Intent(LaunchAppActivity.this, LoginActivity.class);
                 startActivity(i);
                 finish();
             }
