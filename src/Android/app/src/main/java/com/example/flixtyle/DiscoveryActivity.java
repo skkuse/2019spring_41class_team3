@@ -21,7 +21,7 @@ public class DiscoveryActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_discovery);
+        setContentView(R.layout.discovery);
 
 
         al = new ArrayList<>();
@@ -60,6 +60,12 @@ public class DiscoveryActivity extends AppCompatActivity {
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(DiscoveryActivity.this, "right",Toast.LENGTH_SHORT ).show();
             }
+
+            @Override
+            public void onTopCardExit(Object dataObject) {
+                Toast.makeText(DiscoveryActivity.this, "top",Toast.LENGTH_SHORT ).show();
+            }
+
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
