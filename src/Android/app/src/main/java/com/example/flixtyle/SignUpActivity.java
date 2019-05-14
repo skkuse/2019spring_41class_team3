@@ -41,6 +41,7 @@ public class SignUpActivity extends AppCompatActivity {
                 //User is logged in
                 if(user!=null){
                     Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
+                    startActivity(intent);
                     finish();
                     return;
                 }
@@ -61,19 +62,27 @@ public class SignUpActivity extends AppCompatActivity {
                 final String password=mPassword.getText().toString();
                 final String passwordCheck=mPasswordCheck.getText().toString();
 
-                if(password==passwordCheck) {
-                    mAuth.createUserWithEmailAndPassword(email,
-                            password).addOnCompleteListener(SignUpActivity.this, new OnCompleteListener<AuthResult>() {
+                //check if equal
+                if(password.equals(passwordCheck)) {
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(SignUpActivity.this,
+                                    new OnCompleteListener<AuthResult>() {
+
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             //check if creation wasn't successful
                             if(!task.isSuccessful()){
-                                Toast.makeText(SignUpActivity.this, "failed to sign up", Toast.LENGTH_SHORT).show();;
+                                Toast.makeText(SignUpActivity.this, "failed to sign up",
+                                        Toast.LENGTH_SHORT).show();
 
                             }
                         }
                     });
 
+                }
+                else{
+                    Toast.makeText(SignUpActivity.this, "passwords do not match",
+                            Toast.LENGTH_SHORT).show();
                 }
 
 
