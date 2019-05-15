@@ -1,6 +1,7 @@
 package com.example.flixtyle;
 
 import android.content.Intent;
+import android.graphics.Region;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,22 +16,22 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class LoginActivity extends AppCompatActivity {
+public class SignUpActivity extends AppCompatActivity {
 
-    private Button mLogin;
-    private Button mSignUp;
     private EditText mEmail;
     private EditText mPassword;
+    private EditText mPasswordCheck;
 
+    private Button mSignup;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener firebaseAuthStateListener;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+        setContentView(R.layout.activity_sign_up);
+
 
         mAuth=FirebaseAuth.getInstance();
         firebaseAuthStateListener=new FirebaseAuth.AuthStateListener() {
@@ -39,7 +40,7 @@ public class LoginActivity extends AppCompatActivity {
                 final FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
                 //User is logged in
                 if(user!=null){
-                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, DiscoveryActivity.class);
                     startActivity(intent);
                     finish();
                     return;
@@ -47,42 +48,43 @@ public class LoginActivity extends AppCompatActivity {
             }
         };
 
-        mEmail=(EditText) findViewById(R.id.email_edit);
-        mPassword=(EditText)findViewById(R.id.pw_edit);
+        mEmail=(EditText) findViewById(R.id.edit_email);
+        mPassword=(EditText)findViewById(R.id.edit_password);
+        mPasswordCheck=(EditText)findViewById(R.id.edit_check);
 
-        mSignUp=(Button)findViewById(R.id.signup_button);
-        mLogin=(Button)findViewById(R.id.login_button) ;
+        mSignup=(Button)findViewById(R.id.btn_signup);
 
-        mSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(LoginActivity.this, SignUpActivity.class);
-                startActivity(intent);
-                finish();
-            }
-        });
 
-        mLogin.setOnClickListener(new View.OnClickListener() {
+        mSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String email= mEmail.getText().toString();
                 final String password=mPassword.getText().toString();
+                final String passwordCheck=mPasswordCheck.getText().toString();
 
+                //check if equal
+                if(password.equals(passwordCheck)) {
+                    mAuth.createUserWithEmailAndPassword(email, password)
+                            .addOnCompleteListener(SignUpActivity.this,
+                                    new OnCompleteListener<AuthResult>() {
 
+                        @Override
+                        public void onComplete(@NonNull Task<AuthResult> task) {
+                            //check if creation wasn't successful
+                            if(!task.isSuccessful()){
+                                Toast.makeText(SignUpActivity.this, "failed to sign up",
+                                        Toast.LENGTH_SHORT).show();
 
-                mAuth.signInWithEmailAndPassword(email,
-                        password).addOnCompleteListener(LoginActivity.this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        //check if creation wasn't successful
-                        if (!task.isSuccessful()) {
-                            Toast.makeText(LoginActivity.this, "failed to sign in", Toast.LENGTH_SHORT).show();
-                            ;
-
+                            }
                         }
-                    }
+                    });
 
-                });
+                }
+                else{
+                    Toast.makeText(SignUpActivity.this, "passwords do not match",
+                            Toast.LENGTH_SHORT).show();
+                }
+
 
             }
         });
@@ -102,5 +104,3 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.removeAuthStateListener(firebaseAuthStateListener);
     }
 }
-
-
