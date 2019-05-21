@@ -10,7 +10,7 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="100dp"
+    android:paddingTop="40dp"
     android:id="@+id/register"
     tools:context=".SignUpActivity">
 
@@ -41,6 +41,7 @@
         android:textColorHint="@android:color/white"
         android:layout_height="50dp"
         android:inputType="textEmailAddress"
+        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true" />
 
@@ -56,6 +57,7 @@
         android:imeActionLabel="Login"
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
+        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true"
         android:autofillHints="" />
@@ -72,9 +74,32 @@
         android:imeActionLabel="Login"
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
+        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true"
         android:autofillHints="" />
+
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/bdg_loginpassword"
+        android:id="@+id/radioGender">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/hanna"
+                android:text="Male"/>
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:fontFamily="@font/hanna"
+                android:text="Female"/>
+
+    </RadioGroup>
 
 
     <Button
