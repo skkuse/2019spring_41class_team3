@@ -6,4 +6,7 @@
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="password_check">Password Check</string>
+
+    <!-- TODO: Add address to production server -->
+    <string name="server_address"></string>
 </resources>
