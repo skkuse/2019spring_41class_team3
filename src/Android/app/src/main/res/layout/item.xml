@@ -5,6 +5,9 @@
     android:layout_width="250dp"
     android:layout_height="170dp">
 
+
+    <Card
+
     <TextView
         android:id="@+id/helloText"
         android:textSize="40sp"
@@ -31,6 +34,15 @@
         android:layout_height="20dp"
         android:layout_margin="10dp"
         android:layout_gravity="right"
+        android:background="@color/colorPrimaryDark" />
+
+    <View
+        android:id="@+id/item_swipe_up_indicator"
+        android:alpha="0"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="10dp"
+        android:layout_gravity="center_horizontal"
         android:background="@color/colorPrimaryDark" />
 
 </FrameLayout>
