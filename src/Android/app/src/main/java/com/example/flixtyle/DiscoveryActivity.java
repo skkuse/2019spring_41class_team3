@@ -1,11 +1,14 @@
 package com.example.flixtyle;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
@@ -15,6 +18,8 @@ public class DiscoveryActivity extends AppCompatActivity {
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
+
+    private FirebaseAuth mAuth;
 
 
 
@@ -34,7 +39,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         al.add("7");
         al.add("8");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.name_item, al );
 
         SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -87,6 +92,15 @@ public class DiscoveryActivity extends AppCompatActivity {
                 Toast.makeText(DiscoveryActivity.this, "clicked",Toast.LENGTH_SHORT ).show();
             }
         });
+
+    }
+
+    public void logoutUser(View view){
+        mAuth.signOut();
+        Intent intent=new Intent(DiscoveryActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+        return;
 
     }
 
