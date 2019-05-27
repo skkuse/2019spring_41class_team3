@@ -14,7 +14,7 @@ import android.view.MenuItem;
 
 
 public class MainActivity extends AppCompatActivity
-        //implements AccountActivity.OnFragmentInteractionListener, RecommedationActivity.OnFragmentInteractionListener
+        //implements AccountFragment.OnFragmentInteractionListener, RecommedationFragment.OnFragmentInteractionListener
         {
 
 
@@ -85,11 +85,11 @@ public class MainActivity extends AppCompatActivity
             switch (position) {
 
                 case 0:
-                    return new RecommedationActivity();
+                    return new RecommedationFragment();
                 case 1:
                     return new DiscoveryActivity();
                 case 2:
-                    return new AccountActivity();
+                    return new AccountFragment();
                 default:
                     return null;
 
