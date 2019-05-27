@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Flixtyle (DEBUG)</string>
+    <string name="server_address">http://localhost:3000</string>
+</resources>
