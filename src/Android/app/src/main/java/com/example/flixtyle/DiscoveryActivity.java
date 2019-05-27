@@ -34,7 +34,7 @@ public class DiscoveryActivity extends AppCompatActivity {
         al.add("7");
         al.add("8");
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.helloText, al );
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.name_item, al );
 
         SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView) findViewById(R.id.frame);
 
