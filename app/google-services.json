@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "498634721820",
+    "firebase_url": "https://flixtyle.firebaseio.com",
+    "project_id": "flixtyle",
+    "storage_bucket": "flixtyle.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:498634721820:android:a300e640eeb987d4",
+        "android_client_info": {
+          "package_name": "com.example.flixtyle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "498634721820-gblieen1i6cmohgrjhtqqkr39jq2qntn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.flixtyle",
+            "certificate_hash": "526f4dd600fc1ffde2f9439452c4c196d1586eac"
+          }
+        },
+        {
+          "client_id": "498634721820-spic3fjcbgsb2gdkbmpsi9evquc55pm3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvTi3QuP0HJAGRAlKl5AHLHbeFgN_UhEo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "498634721820-spic3fjcbgsb2gdkbmpsi9evquc55pm3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
