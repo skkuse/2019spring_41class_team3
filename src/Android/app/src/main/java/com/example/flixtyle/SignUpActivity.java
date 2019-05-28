@@ -26,6 +26,7 @@ public class SignUpActivity extends AppCompatActivity {
     private EditText mEmail;
     private EditText mPassword;
     private EditText mPasswordCheck;
+    private EditText mName;
 
     private RadioGroup mRadioGender;
 
@@ -58,6 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
         mEmail=(EditText) findViewById(R.id.edit_email);
         mPassword=(EditText)findViewById(R.id.edit_password);
         mPasswordCheck=(EditText)findViewById(R.id.edit_check);
+        mName=(EditText)findViewById(R.id.edit_name);
 
         mSignup=(Button)findViewById(R.id.btn_signup);
 
@@ -85,6 +87,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final String email= mEmail.getText().toString();
                 final String password=mPassword.getText().toString();
                 final String passwordCheck=mPasswordCheck.getText().toString();
+                final String name=mName.getText().toString();
 
                 //check if equal
                 if(password.equals(passwordCheck)) {
@@ -106,7 +109,7 @@ public class SignUpActivity extends AppCompatActivity {
                                 String userId=mAuth.getCurrentUser().getUid();
                                 //reference
                                 DatabaseReference currentUserDb= FirebaseDatabase.getInstance().getReference()
-                                        .child("Users").child(radioButton.getText().toString());
+                                        .child("Users").child(radioButton.getText().toString()).child(userId).child("name");
 
                                 currentUserDb.setValue(userId);
                             }
