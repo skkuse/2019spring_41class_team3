@@ -39,7 +39,7 @@
         android:autofillHints="@android:color/white"
         android:textColorHint="@android:color/white"
         android:layout_height="50dp"
-        android:inputType="textEmailAddress"
+        android:inputType="textPersonName"
         android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true" />
