@@ -37,7 +37,7 @@
             android:background="@drawable/bdg_loginpassword"
             android:textSize="25sp"
             android:textColor="#F2A9A5"
-            android:hint="@string/email"
+            android:hint="Email"
             android:textColorHint="@android:color/white"
             android:layout_height="50dp"
             android:inputType="textEmailAddress"
@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:background="@drawable/bdg_loginpassword"
             android:layout_height="50dp"
-            android:hint="@string/password"
+            android:hint="Password"
             android:textColorHint="@android:color/white"
             android:imeActionId="6"
             android:imeActionLabel="Login"
@@ -76,13 +76,13 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/email_sign_up_button"
+            android:id="@+id/signup_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_weight="1"
-            android:text="@string/sign_up"
+            android:text="Sign Up"
             android:textSize="30sp"
             android:textColor="#ffffff"
             android:backgroundTint="#F2A9A5"
@@ -90,7 +90,7 @@
             android:textStyle="bold" />
 
         <Button
-            android:id="@+id/email_sign_in_button"
+            android:id="@+id/login_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
