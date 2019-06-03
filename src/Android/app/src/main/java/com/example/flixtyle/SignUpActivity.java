@@ -48,7 +48,7 @@ public class SignUpActivity extends AppCompatActivity {
                 final FirebaseUser user = firebaseAuth.getInstance().getCurrentUser();
                 //User is logged in
                 if(user!=null){
-                    Intent intent = new Intent(SignUpActivity.this, DiscoveryActivity.class);
+                    Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     return;
