@@ -55,24 +55,24 @@
         <EditText
             android:id="@+id/pw_edit"
             android:layout_width="match_parent"
-            android:background="@drawable/bdg_loginpassword"
             android:layout_height="50dp"
+            android:autofillHints=""
+            android:background="@drawable/bdg_loginpassword"
             android:hint="Password"
-            android:textColorHint="@android:color/white"
             android:imeActionId="6"
             android:imeActionLabel="Login"
             android:imeOptions="actionUnspecified"
             android:inputType="textPassword"
             android:maxLines="1"
             android:singleLine="true"
-            android:textSize="25sp"
-            android:autofillHints="" />
+            android:textColorHint="@android:color/white"
+            android:textSize="25sp" />
 
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_width="383dp"
+        android:layout_height="98dp"
         android:orientation="horizontal">
 
         <Button
@@ -82,11 +82,11 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_weight="1"
-            android:text="Sign Up"
-            android:textSize="30sp"
-            android:textColor="#ffffff"
             android:backgroundTint="#F2A9A5"
             android:fontFamily="@font/hanna"
+            android:text="Sign Up"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
         <Button
@@ -96,14 +96,23 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:layout_weight="1"
-            android:text="@string/login"
-            android:textSize="30sp"
-            android:textColor="#ffffff"
             android:backgroundTint="#F2A9A5"
             android:fontFamily="@font/hanna"
+            android:text="@string/login"
+            android:textColor="#ffffff"
+            android:textSize="30sp"
             android:textStyle="bold" />
 
     </LinearLayout>
+
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/google_signin"
+        android:layout_width="288dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="169dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <CheckBox
         android:id="@+id/autologinChk"
