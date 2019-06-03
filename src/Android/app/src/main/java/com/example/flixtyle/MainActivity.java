@@ -6,16 +6,21 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+
 import android.view.MenuItem;
+
+import com.example.flixtyle.AccountFragment;
+import com.example.flixtyle.DiscoveryActivity;
+import com.example.flixtyle.R;
+import com.example.flixtyle.RecommedationFragment;
 
 
 public class MainActivity extends AppCompatActivity
-        //implements AccountFragment.OnFragmentInteractionListener, RecommedationFragment.OnFragmentInteractionListener
-        {
+        implements AccountFragment.OnFragmentInteractionListener, DiscoveryFragment.OnFragmentInteractionListener, RecommedationFragment.OnFragmentInteractionListener {
 
 
     @Override
@@ -24,15 +29,10 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
 
-
-        navigation.setItemIconTintList(null);
-
         final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
 
-        //FragmentPagerAdapter adapterViewPager = new MyPagerAdapter(getSupportFragmentManager());
-        //viewPager.setAdapter(adapterViewPager);
-
-
+        FragmentPagerAdapter adaterViewPager = new MyPagerAdapter(getSupportFragmentManager());
+        viewPager.setAdapter(adaterViewPager);
 
 
         navigation.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-/*
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity
                 case 0:
                     return new RecommedationFragment();
                 case 1:
-                    return new DiscoveryActivity();
+                    return new DiscoveryFragment();
                 case 2:
                     return new AccountFragment();
                 default:
@@ -95,6 +95,8 @@ public class MainActivity extends AppCompatActivity
 
             }
         }
-    }*/
+
+    }
+
 
 }
