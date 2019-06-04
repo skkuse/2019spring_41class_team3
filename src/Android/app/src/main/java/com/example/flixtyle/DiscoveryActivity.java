@@ -25,6 +25,9 @@ import java.util.ArrayList;
 
 public class DiscoveryActivity extends AppCompatActivity {
 
+    //connect to main activity
+    private cards cards_data[];
+
     private ArrayList<String> al;
     private ArrayAdapter<String> arrayAdapter;
     private int i;
