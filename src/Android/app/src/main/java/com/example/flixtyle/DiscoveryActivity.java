@@ -22,6 +22,7 @@ import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
 
+
 public class DiscoveryActivity extends AppCompatActivity {
 
     private ArrayList<String> al;
