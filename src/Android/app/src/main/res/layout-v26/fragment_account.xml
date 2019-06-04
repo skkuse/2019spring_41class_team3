@@ -19,7 +19,10 @@
             android:layout_marginTop="19dp"
             android:layout_marginEnd="27dp"
             android:text="Heart list"
-            android:background="#FFFFFF"
+            android:textStyle="bold"
+            android:fontFamily="@font/hanna"
+            android:textSize="30sp"
+            android:background="#F2D2C2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button2" />
@@ -32,7 +35,10 @@
             android:layout_marginEnd="27dp"
             android:layout_marginBottom="248dp"
             android:text="User information"
-            android:background="#FFFFFF"
+            android:background="#F2D2C2"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:fontFamily="@font/hanna"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
