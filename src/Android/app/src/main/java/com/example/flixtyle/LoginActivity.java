@@ -134,12 +134,13 @@ public class LoginActivity extends AppCompatActivity {
         //mAuth.addAuthStateListener(firebaseAuthStateListener);
         FirebaseUser currentUser = mAuth.getCurrentUser();
 
-        //if (currentUser != null) {
-            //Intent intent= new Intent(LoginActivity.this, MainActivity.class);
-            //intent.putExtra("UID", UID);
-            //startActivity(intent);
+        updateUI(currentUser);
+    }
 
-        //}
+    public void  updateUI(FirebaseUser account) {
+        if (account != null) {
+            startActivity(new Intent(this, MainActivity.class));
+        }
     }
 
 
@@ -199,7 +200,7 @@ public class LoginActivity extends AppCompatActivity {
                                 postValues = post.toMap();
                                 childUpdates.put("/Users/" + UID, postValues);
                                 mPostReference.updateChildren(childUpdates);
-                                Intent intent= new Intent(LoginActivity.this, SignUpActivity.class);
+                                Intent intent= new Intent(LoginActivity.this, AfterLogin.class);
                                 intent.putExtra("UID", UID);
                                 startActivity(intent);
 
