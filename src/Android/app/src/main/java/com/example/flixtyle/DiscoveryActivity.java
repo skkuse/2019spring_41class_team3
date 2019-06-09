@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class DiscoveryActivity extends AppCompatActivity {
@@ -28,10 +30,16 @@ public class DiscoveryActivity extends AppCompatActivity {
     private cards cards_data[];
 
     private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
+    private arrayAdapter arrayAdapter;
     private int i;
 
     private FirebaseAuth mAuth;
+
+    private String currentUId;
+    private DatabaseReference userDb;
+
+    ListView listView;
+    List<cards> rowItems;
 
 
 
@@ -41,16 +49,12 @@ public class DiscoveryActivity extends AppCompatActivity {
         setContentView(R.layout.discovery);
 
         mAuth=FirebaseAuth.getInstance();
-
-
-
         checkUserSex();
 
+        rowItems = new ArrayList<cards>();
 
-        al = new ArrayList<>();
 
-
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.name_item, al );
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
 
         SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -60,7 +64,7 @@ public class DiscoveryActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -186,6 +190,8 @@ public class DiscoveryActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.exists()){
+                    //cards item=new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
+                    //rowItems.add(items)
                     al.add("1");
                     al.add("2");
                     al.add("3");
