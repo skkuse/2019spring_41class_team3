@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title><%= title %></title>
+  <link rel='stylesheet' href='/stylesheets/style.css' />
+  <script type="text/javascript">
+    function uploadItem() {
+      let data = document.querySelectorAll("#item > input:not([type=submit])");
+      let XHR = new XMLHttpRequest();
+      let urlEncodedDataPairs = {};
+
+      data.forEach(element => {
+        urlEncodedDataPairs[encodeURIComponent(element.name)] = encodeURIComponent(element.value);
+      });
+
+      XHR.open('POST', 'item');
+      XHR.setRequestHeader('Content-Type', 'application/json');
+
+      // Finally, send our data.
+      XHR.send(JSON.stringify(urlEncodedDataPairs));
+    }
+  </script>
+</head>
+
+<body>
+  <h1><%= title %></h1>
+  <form id="item" action="javascript:uploadItem()">
+    Item name: <input type="text" name="item_name"><br />
+    Item url: <input type="url" name="item_url"><br />
+    Image url: <input type="url" name="image_url"><br />
+    <input type="submit" value="submit"><br />
+  </form>
+  <p>Welcome to <%= title %></p>
+</body>
+
+</html>

@@ -23,6 +23,7 @@ firebase.initializeApp({
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var devRouter = require('./routes/dev');
+var uploadRouter = require('./routes/upload');
 
 var app = express();
 
@@ -48,6 +49,9 @@ app.use(databaseMiddleware);
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/dev', devRouter);
+app.use('/upload/', uploadRouter);
+app.use('/crawl/', crawlerRouter);
+app.use('/discovery/', discoveryRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
