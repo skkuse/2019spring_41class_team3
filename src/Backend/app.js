@@ -24,6 +24,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var devRouter = require('./routes/dev');
 var uploadRouter = require('./routes/upload');
+var crawlerRouter = require('./routes/crawl');
 
 var app = express();
 
