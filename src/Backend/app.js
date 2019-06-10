@@ -23,6 +23,10 @@ firebase.initializeApp({
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var devRouter = require('./routes/dev');
+var uploadRouter = require('./routes/upload');
+var crawlerRouter = require('./routes/crawl');
+var discoveryRouter = require("./routes/discovery");
+var recommendationsRouter = require('./routes/recommendation');
 
 var app = express();
 
@@ -42,12 +46,28 @@ var databaseMiddleware =  function(req, res, next){
   req.db = firebase.database();
   next();
 }
+var authMiddleware = function(req, res, next) {
+  req.auth = firebase.auth();
+  req.auth.verifyIdToken(req.headers.authorization.replace("Bearer ", ""))
+  .then(function(decodedToken) {
+    req.token = decodedToken;
+    next();
+  }).catch(function(error) {
+    console.error("Authentication failed");
+    next();
+  });
+}
 //This actually couples the databaseMiddleware to the express app.
 app.use(databaseMiddleware);
+app.use(authMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/dev', devRouter);
+app.use('/upload/', uploadRouter);
+app.use('/crawl/', crawlerRouter);
+app.use('/discovery/', discoveryRouter);
+app.use('/recommendation/', recommendationsRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
