@@ -5,28 +5,28 @@ import java.util.Map;
 
 public class DiscoveryFirebase {
 
-    public String image_url;
-    public String item_name;
-    public String item_url;
+    public String imageUrl;
+    public String itemName;
+    public String itemUrl;
 
     public DiscoveryFirebase(){
         // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
 
-    public DiscoveryFirebase(String image_url, String item_name, String item_url) {
+    public DiscoveryFirebase(String imageUrl, String itemName, String itemUrl) {
 
 
-        this.image_url = image_url;
-        this.item_name = item_name;
-        this.item_url = item_url;
+        this.imageUrl = imageUrl;
+        this.itemName = itemName;
+        this.itemUrl = itemUrl;
     }
 
 
     public Map<String, Object> toMap() {
         HashMap<String, Object> result = new HashMap<>();
-        result.put("image_url", image_url);
-        result.put("item_name", item_name);
-        result.put("item_url", item_url);
+        result.put("imageUrl", imageUrl);
+        result.put("itemName", itemName);
+        result.put("itemUrl", itemUrl);
         return result;
     }
 }
