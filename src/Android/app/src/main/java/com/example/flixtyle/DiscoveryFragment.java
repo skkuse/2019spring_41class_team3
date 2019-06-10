@@ -32,6 +32,29 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.ArrayList;
 
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.lorentzos.flingswipe.SwipeFlingAdapterView;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,14 +63,31 @@ import java.util.Map;
 
 public class DiscoveryFragment extends Fragment {
 
+
     private DatabaseReference mPostReference;
     private FirebaseAuth mAuth;
-    private ArrayList<String[]> al;
-    private ArrayAdapter<String[]> arrayAdapter;
+
     private ImageView iv;
     private String UID;
     private int i, j;
     private  String image_url, item_name, item_url;
+
+    //connect to main activity
+    private cards cards_data[];
+
+    private ArrayList<String> al;
+    private arrayAdapter arrayAdapter;
+
+
+
+    private FirebaseAuth mAuth;
+
+    private String currentUId;
+    private DatabaseReference userDb;
+
+    ListView listView;
+    List<cards> rowItems;
+
 
     public DiscoveryFragment() {
         // Required empty public constructor
@@ -70,12 +110,22 @@ public class DiscoveryFragment extends Fragment {
         mAuth= FirebaseAuth.getInstance();
         UID=mAuth.getCurrentUser().getUid();
         ImageView iv = (ImageView)view.findViewById(R.id.image);
-        al = new ArrayList<String[]>();
+        al = new ArrayList<String>();
         getFirebaseDatabase();
 
-        arrayAdapter = new ArrayAdapter<String[]>(getContext(), R.layout.item, R.id.name_item, al);
 
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView)view.findViewById(R.id.frame);
+
+        mAuth=FirebaseAuth.getInstance();
+        checkUserSex();
+
+        rowItems = new ArrayList<cards>();
+
+
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
+
+        SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView)view.findViewById(R.id.frame);
+
+
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -93,22 +143,23 @@ public class DiscoveryFragment extends Fragment {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(contextRegister, "left", Toast.LENGTH_SHORT).show();
-                j++;
+ 
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(contextRegister, "right", Toast.LENGTH_SHORT).show();
-                j++;
             }
 
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
+
                 //al.add("XML ".concat(String.valueOf(i)));
                 //arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
+
             }
 
             @Override
@@ -118,7 +169,7 @@ public class DiscoveryFragment extends Fragment {
             }
         });
 
-
+/*
         // Optionally add an OnItemClickListener
         flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
             @Override
@@ -143,8 +194,134 @@ public class DiscoveryFragment extends Fragment {
 
             }
         });
+        */
         return view;
     }
+
+    private String userSex;
+    private String oppositeUserSex;
+
+    public void checkUserSex(){
+        final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference femaleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Female");
+        femaleDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.getKey().equals(user.getUid())){
+                    userSex="Female";
+                    oppositeUserSex ="Male";
+                    getClothing();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        DatabaseReference maleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Male");
+        maleDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.getKey().equals(user.getUid())){
+                    userSex="Male";
+                    oppositeUserSex ="Female";
+                    getClothing();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+
+    //get clothing depending on sex
+    //important
+    public void getClothing(){
+        DatabaseReference clothingDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child(userSex);
+        clothingDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.exists()){
+                    //cards item=new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
+                    //rowItems.add(items)
+                    al.add("1");
+                    al.add("2");
+                    al.add("3");
+                    al.add("4");
+                    al.add("5");
+                    al.add("6");
+                    al.add("7");
+                    al.add("8");
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
+    public void logoutUser(View view){
+        mAuth.signOut();
+        Intent intent=new Intent(DiscoveryActivity.this, LoginActivity.class);
+        startActivity(intent);
+        finish();
+
+    }
+
+
+
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -153,7 +330,7 @@ public class DiscoveryFragment extends Fragment {
 
 
 
-
+/*
     public void getFirebaseDatabase() {
         final ValueEventListener postListener = new ValueEventListener() {
             @Override
@@ -181,6 +358,16 @@ public class DiscoveryFragment extends Fragment {
     }
 
 }
+
+*/
+
+
+
+
+
+
+
+
 
 
 
