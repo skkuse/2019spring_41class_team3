@@ -2,13 +2,13 @@ package com.example.flixtyle;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -21,14 +21,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
 import java.util.ArrayList;
+import java.util.List;
+
 
 public class DiscoveryActivity extends AppCompatActivity {
 
+    //connect to main activity
+    private cards cards_data[];
+
     private ArrayList<String> al;
-    private ArrayAdapter<String> arrayAdapter;
+    private arrayAdapter arrayAdapter;
     private int i;
 
     private FirebaseAuth mAuth;
+
+    private String currentUId;
+    private DatabaseReference userDb;
+
+    ListView listView;
+    List<cards> rowItems;
 
 
 
@@ -37,18 +48,13 @@ public class DiscoveryActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.discovery);
 
+        mAuth=FirebaseAuth.getInstance();
+        checkUserSex();
 
-        al = new ArrayList<>();
-        al.add("1");
-        al.add("2");
-        al.add("3");
-        al.add("4");
-        al.add("5");
-        al.add("6");
-        al.add("7");
-        al.add("8");
+        rowItems = new ArrayList<cards>();
 
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.item, R.id.name_item, al );
+
+        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
 
         SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView) findViewById(R.id.frame);
 
@@ -58,7 +64,7 @@ public class DiscoveryActivity extends AppCompatActivity {
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
+                rowItems.remove(0);
                 arrayAdapter.notifyDataSetChanged();
             }
 
@@ -79,11 +85,14 @@ public class DiscoveryActivity extends AppCompatActivity {
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
+
                 // Ask for more data here
+                /*
                 al.add("XML ".concat(String.valueOf(i)));
                 arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
                 i++;
+                */
             }
 
             @Override
@@ -103,15 +112,20 @@ public class DiscoveryActivity extends AppCompatActivity {
         });
 
     }
+    private String userSex;
+    private String oppositeUserSex;
+
 
     public void checkUserSex(){
         final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference femaleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("Female");
+        DatabaseReference femaleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Female");
         femaleDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 if(dataSnapshot.getKey().equals(user.getUid())){
-
+                    userSex="Female";
+                    oppositeUserSex ="Male";
+                    getClothing();
                 }
             }
 
@@ -127,7 +141,38 @@ public class DiscoveryActivity extends AppCompatActivity {
 
             @Override
             public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+
+        DatabaseReference maleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Male");
+        maleDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.getKey().equals(user.getUid())){
+                    userSex="Male";
+                    oppositeUserSex ="Female";
+                    getClothing();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
             }
 
             @Override
@@ -136,6 +181,50 @@ public class DiscoveryActivity extends AppCompatActivity {
             }
         });
     }
+
+    //get clothing depending on sex
+    //important
+    public void getClothing(){
+        DatabaseReference clothingDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child(userSex);
+        clothingDb.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                if(dataSnapshot.exists()){
+                    //cards item=new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
+                    //rowItems.add(items)
+                    al.add("1");
+                    al.add("2");
+                    al.add("3");
+                    al.add("4");
+                    al.add("5");
+                    al.add("6");
+                    al.add("7");
+                    al.add("8");
+                    arrayAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+    }
+
 
     public void logoutUser(View view){
         mAuth.signOut();

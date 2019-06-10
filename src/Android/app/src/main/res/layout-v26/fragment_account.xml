@@ -1,7 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment"
-    android:background="#FEAE8B"/>
+    android:background="#FEAE8B">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <Button
+            android:id="@+id/HeartButton"
+            android:layout_width="285dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="27dp"
+            android:backgroundTint="#ff8063"
+            android:text="Heart list"
+            android:textColor="#ffffff"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:fontFamily="@font/hanna"
+            android:background="#F2D2C2"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/ChangeButton" />
+
+        <Button
+            android:id="@+id/ChangeButton"
+            android:layout_width="285dp"
+            android:layout_height="53dp"
+            android:layout_marginStart="27dp"
+            android:layout_marginEnd="27dp"
+            android:layout_marginBottom="248dp"
+
+            android:backgroundTint="#ff8063"
+            android:fontFamily="@font/hanna"
+            android:text="Change"
+            android:textColor="#ffffff"
+            android:textStyle="bold"
+            android:textSize="30dp"
+            android:background="#F2D2C2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCity" />
+
+        <TextView
+            android:id="@+id/textName"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginTop="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffdeb5"
+            android:fontFamily="@font/hanna"
+            android:text="TextView"
+            android:textColor="#FEAE8B"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/textGender"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textGender"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffdeb5"
+            android:fontFamily="@font/hanna"
+            android:text="TextView"
+            android:textColor="#FEAE8B"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/textBirth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textName" />
+
+        <TextView
+            android:id="@+id/textBirth"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffdeb5"
+            android:fontFamily="@font/hanna"
+            android:text="TextView"
+            android:textColor="#FEAE8B"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/textCountry"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textGender" />
+
+        <TextView
+            android:id="@+id/textCity"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="80dp"
+            android:background="#ffdeb5"
+            android:fontFamily="@font/hanna"
+            android:text="TextView"
+            android:textColor="#FEAE8B"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/ChangeButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textCountry" />
+
+        <TextView
+            android:id="@+id/textCountry"
+            android:layout_width="290dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="70dp"
+            android:layout_marginEnd="70dp"
+            android:layout_marginBottom="10dp"
+            android:background="#ffdeb5"
+            android:fontFamily="@font/hanna"
+            android:text="TextView"
+            android:textColor="#FEAE8B"
+            android:textSize="30dp"
+            app:layout_constraintBottom_toTopOf="@+id/textCity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textBirth" />
+    </android.support.constraint.ConstraintLayout>
+
+</FrameLayout>

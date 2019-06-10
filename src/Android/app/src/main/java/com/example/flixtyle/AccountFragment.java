@@ -1,106 +1,130 @@
 package com.example.flixtyle;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link AccountFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link AccountFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class AccountFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+    private DatabaseReference mPostReference;
+    private FirebaseAuth mAuth;
+
+
+    private Button HeartButton;
+    private Button ChangeButton;
+    private String UID;
+    private TextView TextName;
+    private TextView TextGender;
+    private TextView TextBirth;
+    private TextView TextCity;
+    private TextView TextCountry;
+
 
     public AccountFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AccountFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AccountFragment newInstance(String param1, String param2) {
-        AccountFragment fragment = new AccountFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        View view = inflater.inflate(R.layout.fragment_account, container, false);
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_account, container, false);
+        mAuth= FirebaseAuth.getInstance();
+        UID=mAuth.getCurrentUser().getUid();
+        mPostReference = FirebaseDatabase.getInstance().getReference();
+        TextName = (TextView)view.findViewById(R.id.textName);
+        TextGender = (TextView)view.findViewById(R.id.textGender);
+        TextBirth = (TextView)view.findViewById(R.id.textBirth);
+        TextCity = (TextView)view.findViewById(R.id.textCity);
+        TextCountry = (TextView)view.findViewById(R.id.textCountry);
+        HeartButton = (Button) view.findViewById(R.id.HeartButton);
+        ChangeButton = (Button) view.findViewById(R.id.ChangeButton);
+
+
+        getUserFirebaseDatabase();
+
+        return view;
+    }
+    public void getUserFirebaseDatabase() {
+        final ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("onDataChange", "Data is Updated");
+
+                Userfirebase get = dataSnapshot.getValue(Userfirebase.class);
+                String[] info = {get.user_email, get.user_name, get.user_birth, get.user_gender, get.user_country, get.user_city};
+
+                TextName.setText("Name: "+info[1]);
+                TextGender.setText("Gender: "+info[2]);
+                TextBirth.setText("Birth Year: "+info[3]);
+                TextCountry.setText("Country: "+info[4]);
+                TextCity.setText("City: "+info[5]);
+
+                Log.d("getFirebaseDatabase", "key: " + info[0]);
+                Log.d("getFirebaseDatabase", "info: " + info[1] + info[2] + info[3] + info[4]);
+
+                HeartButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent1 = new Intent(getActivity(), HeartList.class);
+                        startActivity(intent1);
+
+
+                    }
+                });
+
+                ChangeButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        Intent intent2 = new Intent(getActivity(), InfoChangeActivity.class);
+                        startActivity(intent2);
+
+
+                    }
+                });
+
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        mPostReference.child("Users").child(UID).addValueEventListener(postListener);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
