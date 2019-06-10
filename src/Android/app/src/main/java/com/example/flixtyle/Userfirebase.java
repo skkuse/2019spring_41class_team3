@@ -12,7 +12,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -23,13 +22,13 @@ public class Userfirebase {
         void onUserReady(User user);
     }
 
-    public class User {
+    public static class User {
         private User instance = null;
 
         private String UID;
         private String user_name = null;
         private String user_email = null;
-        private Integer user_birth = null;
+        private Long user_birth = null;
         private String user_gender = null;
         private String user_city = null;
         private String user_country = null;
@@ -63,7 +62,7 @@ public class Userfirebase {
             return UID;
         }
 
-        public Integer getUser_birth() {
+        public Long getUser_birth() {
             return user_birth;
         }
 
@@ -162,7 +161,7 @@ public class Userfirebase {
                     user_email = (String) value;
                     break;
                 case "user_birth":
-                    user_birth = (Integer) value;
+                    user_birth = (Long) value;
                     break;
                 case "user_gender":
                     user_gender = (String) value;
@@ -180,7 +179,7 @@ public class Userfirebase {
             }
         }
 
-        private User(final boolean once, final UserReadyListener listener) {
+        public User(final boolean once, final UserReadyListener listener) {
             UID = FirebaseAuth.getInstance().getUid();
             final DatabaseReference userReference = FirebaseDatabase.getInstance().getReference()
                     .child("Users")
@@ -230,16 +229,6 @@ public class Userfirebase {
 
                 }
             });
-        }
-
-        // Callback will only be called once
-        public void requestUser(UserReadyListener listener) {
-            new User(true, listener);
-        }
-
-        // Callback will only be called on every value update
-        public void requestRealtimeUser(UserReadyListener listener) {
-            new User(false, listener);
         }
     }
 

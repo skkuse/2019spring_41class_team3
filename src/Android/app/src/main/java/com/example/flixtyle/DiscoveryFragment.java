@@ -2,8 +2,6 @@ package com.example.flixtyle;
 
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -12,57 +10,38 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.GetTokenResult;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.io.BufferedInputStream;
-import java.io.InputStream;
-import java.net.URI;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-
 public class DiscoveryFragment extends Fragment {
-
 
     private DatabaseReference mPostReference;
     private FirebaseAuth mAuth;
@@ -75,7 +54,6 @@ public class DiscoveryFragment extends Fragment {
     //connect to main activity
     private cards cards_data[];
 
-    private ArrayList<String> al;
     private arrayAdapter arrayAdapter;
 
 
@@ -105,30 +83,17 @@ public class DiscoveryFragment extends Fragment {
 
         mPostReference = FirebaseDatabase.getInstance().getReference();
         mAuth = FirebaseAuth.getInstance();
-        UID = mAuth.getCurrentUser().getUid();
-        ImageView iv = (ImageView) view.findViewById(R.id.image);
-        al = new ArrayList<String>();
 
-
-        mAuth = FirebaseAuth.getInstance();
         checkUserSex();
 
-        rowItems = new ArrayList<cards>();
-
-
-        arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems);
-
-        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.frame);
-//
-
-        flingContainer.setAdapter(arrayAdapter);
-        flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
+        final Flinger flinger = new Flinger(getContext(), (SwipeFlingAdapterView) view.findViewById(R.id.frame));
+        flinger.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
                 // this is the simplest way to delete an object from the Adapter (/AdapterView)
                 Log.d("LIST", "removed object!");
-                al.remove(0);
-                arrayAdapter.notifyDataSetChanged();
+                flinger.getArray().remove(0);
+                flinger.notifyDataSetChanged();
             }
 
             @Override
@@ -162,6 +127,63 @@ public class DiscoveryFragment extends Fragment {
 
             }
         });
+
+        mAuth.getAccessToken(true).addOnCompleteListener(
+                new OnCompleteListener<GetTokenResult>() {
+                    @Override
+                    public void onComplete(@NonNull final Task<GetTokenResult> task) {
+                        new Thread() {
+                            @Override
+                            public void run() {
+                                try {
+                                    if (task.isSuccessful()) {
+                                        HttpURLConnection connection
+                                                = (HttpURLConnection) new URL(
+                                                        getString(R.string.server_address)
+                                                                + "/discovery/"
+                                                                + mAuth.getUid()).openConnection();
+                                        connection.setRequestMethod("GET");
+                                        connection.setRequestProperty("Authorization", "Bearer " + task.getResult().getToken());
+                                        JsonObject root
+                                                = new JsonParser().parse(new InputStreamReader(connection.getInputStream()))
+                                                .getAsJsonObject();
+                                        for (String key: root.keySet()) {
+                                            JsonObject o = root.get(key).getAsJsonObject();
+                                            flinger.getArray().add(new Flinger.Item(
+                                                    key,
+                                                    o.get("image_url").getAsString(),
+                                                    o.get("item_name").getAsString(),
+                                                    o.get("item_url").getAsString()
+                                            ));
+                                        }
+                                        DiscoveryFragment.this.getActivity().runOnUiThread(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        flinger.notifyDataSetChanged();
+                                                    }
+                                                }
+                                        );
+                                    } else {
+                                        task.getException().printStackTrace();
+                                    }
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                    DiscoveryFragment.this.getActivity().runOnUiThread(
+                                            new Runnable() {
+                                                @Override
+                                                public void run() {
+                                                    Toast.makeText(contextRegister, "Failed to connect to the server.", Toast.LENGTH_SHORT).show();
+                                                }
+                                            }
+                                    );
+                                }
+                            }
+                        }.start();
+                    }
+                }
+        );
+
 
 /*
         // Optionally add an OnItemClickListener
@@ -272,14 +294,6 @@ public class DiscoveryFragment extends Fragment {
                 if (dataSnapshot.exists()) {
                     //cards item=new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
                     //rowItems.add(items)
-                    al.add("1");
-                    al.add("2");
-                    al.add("3");
-                    al.add("4");
-                    al.add("5");
-                    al.add("6");
-                    al.add("7");
-                    al.add("8");
                     arrayAdapter.notifyDataSetChanged();
                 }
             }

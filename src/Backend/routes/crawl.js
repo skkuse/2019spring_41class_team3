@@ -71,7 +71,7 @@ let crawl = async (req)=> {
                 var im = a.querySelector("img.product-media");
                 data.push(
                   {
-                    itemName: i.innerText, itemUrl: i.href, imageUrl: im.src
+                    item_name: i.innerText, item_url: i.href, image_url: im.src
                   }
                 );
               });
