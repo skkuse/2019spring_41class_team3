@@ -70,7 +70,7 @@ public class DiscoveryFragment extends Fragment {
     private ImageView iv;
     private String UID;
     private int i, j;
-    private  String image_url, item_name, item_url;
+    private String image_url, item_name, item_url;
 
     //connect to main activity
     private cards cards_data[];
@@ -78,9 +78,6 @@ public class DiscoveryFragment extends Fragment {
     private ArrayList<String> al;
     private arrayAdapter arrayAdapter;
 
-
-
-    private FirebaseAuth mAuth;
 
     private String currentUId;
     private DatabaseReference userDb;
@@ -107,25 +104,22 @@ public class DiscoveryFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_discovery, container, false);
 
         mPostReference = FirebaseDatabase.getInstance().getReference();
-        mAuth= FirebaseAuth.getInstance();
-        UID=mAuth.getCurrentUser().getUid();
-        ImageView iv = (ImageView)view.findViewById(R.id.image);
+        mAuth = FirebaseAuth.getInstance();
+        UID = mAuth.getCurrentUser().getUid();
+        ImageView iv = (ImageView) view.findViewById(R.id.image);
         al = new ArrayList<String>();
-        getFirebaseDatabase();
 
 
-
-        mAuth=FirebaseAuth.getInstance();
+        mAuth = FirebaseAuth.getInstance();
         checkUserSex();
 
         rowItems = new ArrayList<cards>();
 
 
-        arrayAdapter = new arrayAdapter(this, R.layout.item, rowItems );
+        arrayAdapter = new arrayAdapter(getContext(), R.layout.item, rowItems);
 
-        SwipeFlingAdapterView flingContainer=(SwipeFlingAdapterView)view.findViewById(R.id.frame);
-
-
+        SwipeFlingAdapterView flingContainer = (SwipeFlingAdapterView) view.findViewById(R.id.frame);
+//
 
         flingContainer.setAdapter(arrayAdapter);
         flingContainer.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -143,7 +137,7 @@ public class DiscoveryFragment extends Fragment {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(contextRegister, "left", Toast.LENGTH_SHORT).show();
- 
+
             }
 
             @Override
@@ -201,15 +195,15 @@ public class DiscoveryFragment extends Fragment {
     private String userSex;
     private String oppositeUserSex;
 
-    public void checkUserSex(){
-        final FirebaseUser user=FirebaseAuth.getInstance().getCurrentUser();
-        DatabaseReference femaleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Female");
+    public void checkUserSex() {
+        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        DatabaseReference femaleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Female");
         femaleDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.getKey().equals(user.getUid())){
-                    userSex="Female";
-                    oppositeUserSex ="Male";
+                if (dataSnapshot.getKey().equals(user.getUid())) {
+                    userSex = "Female";
+                    oppositeUserSex = "Male";
                     getClothing();
                 }
             }
@@ -235,13 +229,13 @@ public class DiscoveryFragment extends Fragment {
         });
 
 
-        DatabaseReference maleDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Male");
+        DatabaseReference maleDb = FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child("Male");
         maleDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.getKey().equals(user.getUid())){
-                    userSex="Male";
-                    oppositeUserSex ="Female";
+                if (dataSnapshot.getKey().equals(user.getUid())) {
+                    userSex = "Male";
+                    oppositeUserSex = "Female";
                     getClothing();
                 }
             }
@@ -270,12 +264,12 @@ public class DiscoveryFragment extends Fragment {
 
     //get clothing depending on sex
     //important
-    public void getClothing(){
-        DatabaseReference clothingDb= FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child(userSex);
+    public void getClothing() {
+        DatabaseReference clothingDb = FirebaseDatabase.getInstance().getReference().child("Users").child("UID").child(userSex);
         clothingDb.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                if(dataSnapshot.exists()){
+                if (dataSnapshot.exists()) {
                     //cards item=new cards(dataSnapshot.getKey(),dataSnapshot.child("name").getValue().toString());
                     //rowItems.add(items)
                     al.add("1");
@@ -311,21 +305,21 @@ public class DiscoveryFragment extends Fragment {
         });
     }
 
-    public void logoutUser(View view){
+    public void logoutUser(View view) {
         mAuth.signOut();
-        Intent intent=new Intent(DiscoveryActivity.this, LoginActivity.class);
+        Intent intent = new Intent(getContext(), LoginActivity.class);
         startActivity(intent);
-        finish();
+        getActivity().finish();
 
     }
-
-
 
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
+
+}
 
 
 
@@ -340,8 +334,8 @@ public class DiscoveryFragment extends Fragment {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     DiscoveryFirebase get = postSnapshot.getValue(DiscoveryFirebase.class);
-                    String[] info = {key, get.image_url, get.item_name, get.item_url};
-                    al.add(new String[]{key, get.image_url, get.item_name, get.item_url});
+                    String[] info = {key, get.imageUrl, get.itemName, get.itemUrl};
+                    al.add(new String[]{key, get.imageUrl, get.itemName, get.itemUrl});
                     Log.d("getFirebaseDatabase", "key: " + key);
                     Log.d("getFirebaseDatabase", "info: " + info[0] + info[1] + info[2] + info[3]);
                 }
