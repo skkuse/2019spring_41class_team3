@@ -163,8 +163,8 @@ public class DiscoveryFragment extends Fragment {
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     String key = postSnapshot.getKey();
                     DiscoveryFirebase get = postSnapshot.getValue(DiscoveryFirebase.class);
-                    String[] info = {key, get.image_url, get.item_name, get.item_url};
-                    al.add(new String[]{key, get.image_url, get.item_name, get.item_url});
+                    String[] info = {key, get.imageUrl, get.itemName, get.itemUrl};
+                    al.add(new String[]{key, get.imageUrl, get.itemName, get.itemUrl});
                     Log.d("getFirebaseDatabase", "key: " + key);
                     Log.d("getFirebaseDatabase", "info: " + info[0] + info[1] + info[2] + info[3]);
                 }
