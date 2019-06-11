@@ -319,13 +319,6 @@ public class DiscoveryFragment extends Fragment {
         });
     }
 
-    public void logoutUser(View view) {
-        mAuth.signOut();
-        Intent intent = new Intent(getContext(), LoginActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-
-    }
 
 
     public interface OnFragmentInteractionListener {
