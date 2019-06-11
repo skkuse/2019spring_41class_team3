@@ -8,8 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
@@ -19,6 +21,16 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
 
     private ArrayList<HeartItem> items = new ArrayList<>();
     Context context;
+
+    private ItemClick itemClick;
+    public interface ItemClick {
+        public void onClick(View view,int position);
+    }
+
+    //아이템 클릭시 실행 함수 등록 함수
+    public void setItemClick(ItemClick itemClick) {
+        this.itemClick = itemClick;
+    }
 
     @NonNull
     @Override
@@ -34,7 +46,7 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
     }
 
     @Override
-    public void onBindViewHolder(@NonNull HeartAdapter.ViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull HeartAdapter.ViewHolder viewHolder, final int position) {
 
         HeartItem item = items.get(position);
 
@@ -43,16 +55,37 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
                 .into(viewHolder.ivHeart);
 
         viewHolder.tvName.setText(item.getItemName());
-        final String itemUrl = item.getitemUrl();
-
-        viewHolder.mView.setOnClickListener(new View.OnClickListener() {
+        final String itemUrl =item.getitemUrl();
+        final ImageButton heartButton = viewHolder.heartButton;
+        heartButton.setOnClickListener(new View.OnClickListener() {
+            int i= 1;
             @Override
             public void onClick(View v) {
-
-                Uri url= Uri.parse(itemUrl);
-                //Intent intent= new Intent(v.getContext(), url);
-                //v.getContext().startActivity(intent);
-
+                if(itemClick != null){
+                    itemClick.onClick(v, position);
+                    if(i%2==1)
+                    {heartButton.setImageResource(R.drawable.heart_after);
+                        i++;}
+                    else
+                    { heartButton.setImageResource(R.drawable.heart_before);
+                        i--;  }
+                    Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+        ImageView ivHeart = viewHolder.ivHeart;
+        ivHeart.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(itemClick != null){
+                    itemClick.onClick(v, position);
+                    Uri url= Uri.parse(itemUrl);
+                    Intent intent= new Intent(Intent.ACTION_VIEW, url);
+                    if (intent.resolveActivity(v.getContext().getPackageManager()) != null){
+                        v.getContext().startActivity(intent);
+                    }
+                    Toast.makeText(v.getContext(),"image", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -69,7 +102,7 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
-
+        ImageButton heartButton;
         ImageView ivHeart;
         TextView tvName;
         final View mView;
@@ -78,8 +111,8 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
             super(itemView);
 
             ivHeart = itemView.findViewById(R.id.image);
-
             tvName = itemView.findViewById(R.id.item_name);
+            heartButton = itemView.findViewById(R.id.heartbutton);
             mView = itemView;
         }
     }
