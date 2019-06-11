@@ -8,42 +8,36 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/:user', function (req, res) {
-  // Verify token
-  req.auth.verifyIdToken(req.headers.authorization.replace("Bearer ", ""))
-  .then(function(decodedToken) {
-    // Check token validity
-    let uid = decodedToken.uid;
-    if (uid !== null) {
-      // Retrieve user gender
-      req.db.ref().child("Users").child(uid).child("user_gender")
-      .once('value', function(v) {
-        let target = v.val() === "Male"? "topman": "zara";
+  // Check token validity
+  if (req.token !== null) {
+    let uid = req.token.uid;
+    // Retrieve user gender
+    req.db.ref().child("Users").child(uid).child("user_gender")
+    .once('value', function(v) {
+      let target = v.val() === "Male"? "topman": "zara";
 
-        // Retrieve items (for now, randomly)
-        req.db.ref().child('items').child(target)
-        .once('value', function(items) {
-          // Randomly select items from list
-          let JSON = items.toJSON();
-          let keys = Object.keys(JSON);
-          let out = {};
-          let arr = [];
-          while(arr.length < 20) {
-            let r = Math.floor(Math.random()*keys.length);
-            if(arr.indexOf(r) === -1) {
-              arr.push(r);
-              out[keys[r]] = JSON[keys[r]];
-            }
+      // Retrieve items (for now, randomly)
+      req.db.ref().child('items').child(target)
+      .once('value', function(items) {
+        // Randomly select items from list
+        let JSON = items.toJSON();
+        let keys = Object.keys(JSON);
+        let out = {};
+        let arr = [];
+        while(arr.length < 20) {
+          let r = Math.floor(Math.random()*keys.length);
+          if(arr.indexOf(r) === -1) {
+            arr.push(r);
+            out[keys[r]] = JSON[keys[r]];
           }
-          // Send result to user
-          res.json(out)
-          console.log("Sent recommendations to UID: " + uid);
-          console.log(out);
-        });
+        }
+        // Send result to user
+        res.json(out)
+        console.log("Sent recommendations to UID: " + uid);
+        console.log(out);
       });
-    }
-  }).catch(function(error) {
-    console.error(error);
-  });
+    });
+  }
 });
 
 module.exports = router;

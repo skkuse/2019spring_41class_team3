@@ -44,11 +44,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 //This makes it so the database can be accessed in every route
 var databaseMiddleware =  function(req, res, next){
   req.db = firebase.database();
-  req.auth = firebase.auth();
   next();
+}
+var authMiddleware = function(req, res, next) {
+  req.auth = firebase.auth();
+  req.auth.verifyIdToken(req.headers.authorization.replace("Bearer ", ""))
+  .then(function(decodedToken) {
+    req.token = decodedToken;
+    next();
+  }).catch(function(error) {
+    console.error("Authentication failed");
+    next();
+  });
 }
 //This actually couples the databaseMiddleware to the express app.
 app.use(databaseMiddleware);
+app.use(authMiddleware);
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
