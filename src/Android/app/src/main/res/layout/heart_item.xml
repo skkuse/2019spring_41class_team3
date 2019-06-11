@@ -23,8 +23,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:paddingLeft="16dp"
-            android:paddingRight="8dp"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
             android:alpha="0.6"
@@ -37,8 +35,10 @@
                 android:id="@+id/item_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="16dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
                 android:text="Title"
+                android:fontFamily="@font/hanna"
                 android:textColor="@android:color/white"
                 android:textSize="18dp"/>
 
