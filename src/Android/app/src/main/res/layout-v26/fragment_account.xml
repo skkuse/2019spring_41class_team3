@@ -56,31 +56,54 @@
             app:layout_constraintTop_toTopOf="parent"
             android:padding="48dp">
             <EditText
-                style="@style/AccountInfoBoxes"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/hanna"
+                android:textColor="#FEAE8B"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
                 android:id="@+id/textName"
                 android:hint="Name"
                 android:inputType="textPersonName"/>
 
             <RadioGroup
-                style="@style/AccountInfoBoxes"
+                android:layout_margin="8dp"
+                android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/hanna"
+                android:textColor="#FEAE8B"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
                 android:weightSum="2"
                 android:orientation="horizontal">
                 <RadioButton
-                    style="@style/AccountInfoBoxes"
+                    android:padding="4dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="@font/hanna"
+                    android:textColor="#FEAE8B"
+                    android:textSize="30dp"
+                    android:gravity="center_vertical"
                     android:id="@+id/buttonMale"
                     android:buttonTint="@color/colorPrimaryDark"
-                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_margin="0dp"
                     android:text="Male"
                     android:layout_height="match_parent" />
                 <RadioButton
-                    style="@style/AccountInfoBoxes"
+                    android:padding="4dp"
+                    android:layout_width="wrap_content"
+                    android:background="@color/colorPrimary"
+                    android:fontFamily="@font/hanna"
+                    android:textColor="#FEAE8B"
+                    android:textSize="30dp"
+                    android:gravity="center_vertical"
                     android:id="@+id/buttonFemale"
-                    android:buttonTint="@color/colorPrimaryDark"
-                    android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_margin="0dp"
                     android:text="Female"
@@ -88,18 +111,44 @@
             </RadioGroup>
 
             <EditText
-                style="@style/AccountInfoBoxes"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/hanna"
+                android:textColor="#FEAE8B"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
                 android:id="@+id/textBirth"
                 android:hint="Year of Birth"
                 android:inputType="number"/>
 
             <EditText
-                style="@style/AccountInfoBoxes"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/hanna"
+                android:textColor="#FEAE8B"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
                 android:id="@+id/textCountry"
                 android:hint="Country" />
 
             <EditText
-                style="@style/AccountInfoBoxes"
+                android:layout_margin="8dp"
+                android:padding="4dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorPrimary"
+                android:fontFamily="@font/hanna"
+                android:textColor="#FEAE8B"
+                android:textSize="30dp"
+                android:gravity="center_vertical"
+
+
                 android:id="@+id/textCity"
                 android:hint="City" />
 
