@@ -43,6 +43,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
+            <ImageButton
+                android:id="@+id/heartbotton"
+                android:layout_width="66dp"
+                android:layout_height="61dp"
+                android:layout_gravity="right"
+                android:background="@drawable/heartbotton" />
+
+
         </FrameLayout>
 
     </android.support.v7.widget.CardView>
