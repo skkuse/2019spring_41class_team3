@@ -7,8 +7,20 @@
     tools:context=".AccountFragment"
     android:background="@color/colorPrimaryDark">
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="logoutUser"
+        android:textSize="25sp"
+        android:textColor="#F2A9A5"
+        android:backgroundTint="#ffffff"
+        android:fontFamily="@font/hanna"
+
+        android:text="Sign Out" />
+
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
+        android:layout_marginBottom="20dp"
         android:layout_height="match_parent">
 
         <Button
