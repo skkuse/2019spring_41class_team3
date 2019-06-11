@@ -63,6 +63,8 @@ public class DiscoveryFragment extends Fragment {
     ListView listView;
     List<cards> rowItems;
 
+    Flinger flinger;
+
 
     public DiscoveryFragment() {
         // Required empty public constructor
@@ -86,7 +88,7 @@ public class DiscoveryFragment extends Fragment {
 
         checkUserSex();
 
-        final Flinger flinger = new Flinger(getContext(), (SwipeFlingAdapterView) view.findViewById(R.id.frame));
+        flinger = new Flinger(getContext(), (SwipeFlingAdapterView) view.findViewById(R.id.frame));
         flinger.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
             @Override
             public void removeFirstObjectInAdapter() {
@@ -98,23 +100,29 @@ public class DiscoveryFragment extends Fragment {
 
             @Override
             public void onLeftCardExit(Object dataObject) {
-                //Do something on the left!
-                //You also have access to the original object.
-                //If you want to use it just cast it (String) dataObject
-                Toast.makeText(contextRegister, "left", Toast.LENGTH_SHORT).show();
-
+                // Liked an object
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Discovery")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .child(((Flinger.Item) dataObject).getUid())
+                        .setValue(true);
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
-                Toast.makeText(contextRegister, "right", Toast.LENGTH_SHORT).show();
+                // Didn't like the object
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Discovery")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .child(((Flinger.Item) dataObject).getUid())
+                        .setValue(false);
             }
 
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 // Ask for more data here
-
+                supplyItems(contextRegister);
                 //al.add("XML ".concat(String.valueOf(i)));
                 //arrayAdapter.notifyDataSetChanged();
                 Log.d("LIST", "notified");
@@ -128,6 +136,39 @@ public class DiscoveryFragment extends Fragment {
             }
         });
 
+
+
+
+/*
+        // Optionally add an OnItemClickListener
+        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClicked(int itemPosition, Object dataObject) {
+                Toast.makeText(contextRegister, "Heart!", Toast.LENGTH_SHORT).show();
+                Map<String, Object> childUpdates = new HashMap<>();
+                Map<String, Object> postValues = null;
+
+                image_url = al.get(j)[1];
+                item_name = al.get(j)[2];
+                item_url = al.get(j)[3];
+
+                DiscoveryFirebase post = new DiscoveryFirebase(image_url, item_name, item_url);
+                postValues = post.toMap();
+
+                String order_id = al.get(j)[0];
+
+
+                childUpdates.put("/User/" + UID + "/heart_list/"+order_id, postValues);
+                mPostReference.updateChildren(childUpdates);
+
+
+            }
+        });
+        */
+        return view;
+    }
+
+    private void supplyItems(final Context context) {
         mAuth.getAccessToken(true).addOnCompleteListener(
                 new OnCompleteListener<GetTokenResult>() {
                     @Override
@@ -139,9 +180,9 @@ public class DiscoveryFragment extends Fragment {
                                     if (task.isSuccessful()) {
                                         HttpURLConnection connection
                                                 = (HttpURLConnection) new URL(
-                                                        getString(R.string.server_address)
-                                                                + "/discovery/"
-                                                                + mAuth.getUid()).openConnection();
+                                                getString(R.string.server_address)
+                                                        + "/discovery/"
+                                                        + mAuth.getUid()).openConnection();
                                         connection.setRequestMethod("GET");
                                         connection.setRequestProperty("Authorization", "Bearer " + task.getResult().getToken());
                                         JsonObject root
@@ -173,7 +214,7 @@ public class DiscoveryFragment extends Fragment {
                                             new Runnable() {
                                                 @Override
                                                 public void run() {
-                                                    Toast.makeText(contextRegister, "Failed to connect to the server.", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(context, "Failed to connect to the server.", Toast.LENGTH_SHORT).show();
                                                 }
                                             }
                                     );
@@ -183,35 +224,6 @@ public class DiscoveryFragment extends Fragment {
                     }
                 }
         );
-
-
-/*
-        // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(contextRegister, "Heart!", Toast.LENGTH_SHORT).show();
-                Map<String, Object> childUpdates = new HashMap<>();
-                Map<String, Object> postValues = null;
-
-                image_url = al.get(j)[1];
-                item_name = al.get(j)[2];
-                item_url = al.get(j)[3];
-
-                DiscoveryFirebase post = new DiscoveryFirebase(image_url, item_name, item_url);
-                postValues = post.toMap();
-
-                String order_id = al.get(j)[0];
-
-
-                childUpdates.put("/User/" + UID + "/heart_list/"+order_id, postValues);
-                mPostReference.updateChildren(childUpdates);
-
-
-            }
-        });
-        */
-        return view;
     }
 
     private String userSex;

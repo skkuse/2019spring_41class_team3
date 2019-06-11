@@ -172,6 +172,14 @@ public class AccountFragment extends Fragment {
             }
         });
 
+        HeartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent1 = new Intent(getActivity(), HeartList.class);
+                startActivity(intent1);
+            }
+        });
+
 //        getUserFirebaseDatabase();
 
         return view;
@@ -209,13 +217,7 @@ public class AccountFragment extends Fragment {
                 Userfirebase get = dataSnapshot.getValue(Userfirebase.class);
                 String[] info = {get.user_email, get.user_name, get.user_birth, get.user_gender, get.user_country, get.user_city};
 
-                HeartButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent1 = new Intent(getActivity(), HeartList.class);
-                        startActivity(intent1);
-                    }
-                });
+
 
                 ChangeButton.setOnClickListener(new View.OnClickListener() {
                     @Override

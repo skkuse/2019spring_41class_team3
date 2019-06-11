@@ -74,11 +74,25 @@ public class DiscoveryActivity extends AppCompatActivity {
                 //You also have access to the original object.
                 //If you want to use it just cast it (String) dataObject
                 Toast.makeText(DiscoveryActivity.this, "left",Toast.LENGTH_SHORT ).show();
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Discovery")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .child("discovery")
+                        .child("likes")
+                        .push()
+                        .setValue(true);
             }
 
             @Override
             public void onRightCardExit(Object dataObject) {
                 Toast.makeText(DiscoveryActivity.this, "right",Toast.LENGTH_SHORT ).show();
+                FirebaseDatabase.getInstance().getReference()
+                        .child("Discovery")
+                        .child(FirebaseAuth.getInstance().getUid())
+                        .child("discovery")
+                        .child("dislikes")
+                        .push()
+                        .setValue(true);
             }
 
 
