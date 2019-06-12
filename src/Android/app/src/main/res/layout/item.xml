@@ -28,27 +28,28 @@
 
             <TextView
                 android:id="@+id/name_item"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
                 android:background="@color/colorPrimaryDark"
                 android:fontFamily="@font/hanna"
-                android:gravity="center"
                 android:textColor="@android:color/white"
-                android:textSize="40sp"
-                tools:text="Hello"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:id="@+id/image"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:textSize="30sp"
+                tools:text="Hello" />
 
             <ImageButton
                 android:id="@+id/heartbotton"
-                android:layout_width="66dp"
-                android:layout_height="61dp"
+                android:layout_width="33dp"
+                android:layout_height="30dp"
                 android:layout_gravity="right"
                 android:background="@drawable/heartbotton" />
+
+            <ImageView
+                android:id="@+id/image"
+                android:layout_width="291dp"
+                android:layout_height="364dp" />
+
+
 
 
         </FrameLayout>
