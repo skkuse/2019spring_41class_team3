@@ -16,11 +16,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> {
 
     private ArrayList<HeartItem> items = new ArrayList<>();
     Context context;
+    private Random mRandom = new Random();
 
     private ItemClick itemClick;
     public interface ItemClick {
@@ -48,31 +50,59 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull HeartAdapter.ViewHolder viewHolder, final int position) {
 
+        double mRandom = Math.random();
+
         HeartItem item = items.get(position);
 
         Glide.with(viewHolder.itemView.getContext())
                 .load(item.getUrl())
                 .into(viewHolder.ivHeart);
 
+        viewHolder.itemView.getLayoutParams().height = getRandomIntInRange(400,350);
         viewHolder.tvName.setText(item.getItemName());
-        final String itemUrl =item.getitemUrl();
+
+
         final ImageButton heartButton = viewHolder.heartButton;
-        heartButton.setOnClickListener(new View.OnClickListener() {
-            int i= 1;
-            @Override
-            public void onClick(View v) {
-                if(itemClick != null){
-                    itemClick.onClick(v, position);
-                    if(i%2==1)
-                    {heartButton.setImageResource(R.drawable.heart_after);
-                        i++;}
-                    else
-                    { heartButton.setImageResource(R.drawable.heart_before);
-                        i--;  }
-                    Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
+        if (MainActivity.class.equals(context.getClass())) {
+            heartButton.setImageResource(R.drawable.heart_before);
+            heartButton.setOnClickListener(new View.OnClickListener() {
+                int i= 1;
+                @Override
+                public void onClick(View v) {
+                    if(itemClick != null){
+                        itemClick.onClick(v, position);
+                        if(i%2==1)
+                        {heartButton.setImageResource(R.drawable.heart_after);
+                            i++;}
+                        else
+                        { heartButton.setImageResource(R.drawable.heart_before);
+                            i--;  }
+                        Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
-        });
+            });
+        }else if (HeartList.class.equals(context.getClass())) {
+            heartButton.setImageResource(R.drawable.heart_after);
+            heartButton.setOnClickListener(new View.OnClickListener() {
+                int i= 1;
+                @Override
+                public void onClick(View v) {
+                    if(itemClick != null){
+                        itemClick.onClick(v, position);
+                        if(i%2==1)
+                        {heartButton.setImageResource(R.drawable.heart_after);
+                            i++;}
+                        else
+                        { heartButton.setImageResource(R.drawable.heart_before);
+                            i--;  }
+                        Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
+                    }
+                }
+            });
+        }
+
+
+        final String itemUrl =item.getitemUrl();
         ImageView ivHeart = viewHolder.ivHeart;
         ivHeart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +121,11 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
 
 
     }
+
+    protected int getRandomIntInRange(int max, int min){
+        return mRandom.nextInt((max-min)+min)+min;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -116,4 +151,6 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
             mView = itemView;
         }
     }
+
+
 }

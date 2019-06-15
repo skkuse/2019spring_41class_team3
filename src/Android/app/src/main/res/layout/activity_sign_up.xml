@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/colorPrimary"
     xmlns:tools="http://schemas.android.com/tools"
@@ -10,9 +12,16 @@
     android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
-    android:paddingTop="40dp"
+    android:paddingTop="20dp"
     android:id="@+id/register"
     tools:context=".SignUpActivity">
+
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
 
 
     <ImageView
@@ -23,66 +32,87 @@
         android:layout_gravity="center"
         android:layout_margin="20dp"
         android:adjustViewBounds="true"
-        android:maxHeight="200dp"
+        android:maxHeight="180dp"
         android:scaleType="fitXY"
         tools:ignore="ContentDescription"
         />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
 
     <EditText
+        android:padding="6dp"
         android:layout_marginTop="10dp"
         android:id="@+id/edit_name"
         android:layout_width="match_parent"
         android:background="@drawable/bdg_loginpassword"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textColor="#ffffff"
         android:hint="Name"
         android:autofillHints="@android:color/white"
         android:textColorHint="@android:color/white"
         android:layout_height="50dp"
-        android:inputType="textPersonName"
-        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
 
     <EditText
+        android:padding="6dp"
         android:layout_marginTop="10dp"
         android:id="@+id/edit_email"
         android:layout_width="match_parent"
         android:background="@drawable/bdg_loginpassword"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:textColor="#ffffff"
         android:hint="Email"
         android:autofillHints="@android:color/white"
         android:textColorHint="@android:color/white"
         android:layout_height="50dp"
         android:inputType="textEmailAddress"
-        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true" />
 
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
 
     <EditText
+        android:padding="6dp"
         android:id="@+id/edit_password"
         android:layout_width="match_parent"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_height="50dp"
         android:background="@drawable/bdg_loginpassword"
         android:hint="Password"
         android:imeActionId="6"
         android:imeActionLabel="Login"
         android:imeOptions="actionUnspecified"
-        android:inputType="textPassword"
-        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true"
         android:autofillHints="" />
 
+    </android.support.design.widget.TextInputLayout>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
 
     <EditText
+        android:padding="6dp"
         android:id="@+id/edit_check"
         android:layout_width="match_parent"
-        android:textSize="25sp"
+        android:textSize="20sp"
         android:layout_height="50dp"
         android:background="@drawable/bdg_loginpassword"
         android:hint="@string/password_check"
@@ -90,46 +120,50 @@
         android:imeActionLabel="Login"
         android:imeOptions="actionUnspecified"
         android:inputType="textPassword"
-        android:fontFamily="@font/hanna"
         android:maxLines="1"
         android:singleLine="true"
         android:autofillHints="" />
 
+    </android.support.design.widget.TextInputLayout>
 
-    <RadioGroup
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/bdg_loginpassword"
-        android:id="@+id/radioGender">
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="300dp"
+        android:layout_height="wrap_content">
+
+        <RadioGroup
+            android:id="@+id/radioGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/bdg_loginpassword">
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:fontFamily="@font/hanna"
-                android:text="Male"/>
+                android:padding="4dp"
+                android:text="Male" />
+
             <RadioButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
-                android:fontFamily="@font/hanna"
-                android:text="Female"/>
+                android:padding="4dp"
+                android:text="Female" />
 
-    </RadioGroup>
+        </RadioGroup>
 
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/btn_signup"
         style="?android:textAppearanceSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimaryDark"
-        android:fontFamily="@font/hanna"
         android:text="Sign Up"
+        android:layout_width="113dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="25dp"
+        android:backgroundTint="@color/colorPrimaryDark"
         android:textColor="#ffffff"
-        android:textSize="45sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="visible" />
 

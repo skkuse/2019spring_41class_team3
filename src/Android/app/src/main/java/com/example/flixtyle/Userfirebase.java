@@ -235,7 +235,7 @@ public class Userfirebase {
     public String user_name;
     public String user_email;
     public String UID;
-    public String user_birth;
+    public long user_birth;
     public String user_gender;
     public String user_city;
     public String user_country;
@@ -244,7 +244,7 @@ public class Userfirebase {
     public Userfirebase(){
             // Default constructor required for calls to DataSnapshot.getValue(FirebasePost.class)
     }
-    public Userfirebase(String UID, String user_email, String user_name, String user_birth, String user_gender, String user_country, String user_city) {
+    public Userfirebase(String UID, String user_email, String user_name, long user_birth, String user_gender, String user_country, String user_city) {
         this.UID = UID;
         this.user_email = user_email;
         this.user_name = user_name;

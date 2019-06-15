@@ -28,31 +28,33 @@
         />
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content">
 
         <EditText
+            android:padding="6dp"
             android:id="@+id/email_edit"
             android:layout_width="match_parent"
-            android:background="@drawable/bdg_loginpassword"
-            android:textSize="25sp"
-            android:textColor="#F2A9A5"
-            android:hint="Email"
-            android:textColorHint="@android:color/white"
             android:layout_height="50dp"
+            android:autofillHints=""
+            android:background="@drawable/bdg_loginpassword"
+            android:hint="Email"
             android:inputType="textEmailAddress"
             android:maxLines="1"
             android:singleLine="true"
-            android:autofillHints="" tools:targetApi="o"/>
+            android:textColor="#F2A9A5"
+            android:textColorHint="@android:color/white"
+            android:textSize="25sp"
+            tools:targetApi="o" />
 
     </android.support.design.widget.TextInputLayout>
 
     <android.support.design.widget.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_marginTop="20dp"
+        android:layout_width="300dp"
         android:layout_height="wrap_content">
 
         <EditText
+            android:padding="6dp"
             android:id="@+id/pw_edit"
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -71,8 +73,8 @@
     </android.support.design.widget.TextInputLayout>
 
     <LinearLayout
-        android:layout_width="383dp"
-        android:layout_height="98dp"
+        android:layout_width="300dp"
+        android:layout_height="91dp"
         android:orientation="horizontal">
 
         <Button
@@ -80,39 +82,44 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:backgroundTint="#F2A9A5"
-            android:fontFamily="@font/hanna"
             android:text="Sign Up"
             android:textColor="#ffffff"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
 
         <Button
             android:id="@+id/login_button"
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="25dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
             android:layout_weight="1"
             android:backgroundTint="#F2A9A5"
-            android:fontFamily="@font/hanna"
             android:text="@string/login"
             android:textColor="#ffffff"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="visible" />
+
 
     </LinearLayout>
 
     <com.google.android.gms.common.SignInButton
         android:id="@+id/google_signin"
-        android:layout_width="288dp"
-        android:layout_height="48dp"
+        android:layout_width="300dp"
+        android:layout_height="45dp"
         android:layout_marginBottom="169dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
+
+
 
     <CheckBox
         android:id="@+id/autologinChk"

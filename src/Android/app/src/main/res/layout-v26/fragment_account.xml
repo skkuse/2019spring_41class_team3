@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimary">
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
@@ -18,15 +18,15 @@
             android:layout_marginStart="27dp"
             android:layout_marginTop="3dp"
             android:layout_marginEnd="27dp"
-            android:backgroundTint="#FEAE8B"
+            android:layout_gravity="center"
             android:text="Heart list"
             android:textColor="#ffffff"
-            android:textSize="30dp"
+            android:textSize="20dp"
             android:textStyle="bold"
-            android:fontFamily="@font/hanna"
-            android:background="#F2D2C2"
+            android:backgroundTint="#F2A9A5"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            android:visibility="visible"
             app:layout_constraintTop_toBottomOf="@+id/ChangeButton" />
 
         <Button
@@ -55,102 +55,118 @@
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             android:padding="48dp">
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="335dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
             <EditText
-                android:layout_margin="8dp"
                 android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
+                android:background="@drawable/bdg_loginpassword"
+                android:textSize="25dp"
                 android:gravity="center_vertical"
                 android:id="@+id/textName"
                 android:hint="Name"
                 android:inputType="textPersonName"/>
 
+            </android.support.design.widget.TextInputLayout>
+
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="335dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
             <RadioGroup
-                android:layout_margin="8dp"
                 android:padding="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
+                android:background="@drawable/bdg_loginpassword"
                 android:textColor="#FEAE8B"
-                android:textSize="30dp"
+                android:textSize="20dp"
                 android:gravity="center_vertical"
-                android:weightSum="2"
+                android:weightSum="5"
                 android:orientation="horizontal">
                 <RadioButton
                     android:padding="4dp"
                     android:layout_width="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/hanna"
-                    android:textColor="#FEAE8B"
-                    android:textSize="30dp"
+                    android:background="@drawable/bdg_loginpassword"
+                    android:textSize="20dp"
                     android:gravity="center_vertical"
                     android:id="@+id/buttonMale"
-                    android:buttonTint="@color/colorPrimaryDark"
-                    android:layout_weight="1"
+                    android:layout_weight="2"
                     android:layout_margin="0dp"
                     android:text="Male"
                     android:layout_height="match_parent" />
                 <RadioButton
                     android:padding="4dp"
                     android:layout_width="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/hanna"
-                    android:textColor="#FEAE8B"
-                    android:textSize="30dp"
+                    android:background="@drawable/bdg_loginpassword"
+                    android:textSize="20dp"
                     android:gravity="center_vertical"
                     android:id="@+id/buttonFemale"
-                    android:layout_weight="1"
-                    android:layout_margin="0dp"
+                    android:layout_weight="3"
                     android:text="Female"
                     android:layout_height="match_parent" />
             </RadioGroup>
 
-            <EditText
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_width="match_parent"
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="335dp"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
-                android:id="@+id/textBirth"
-                android:hint="Year of Birth"
-                android:inputType="number"/>
+                android:layout_marginTop="10dp">
+
+                <EditText
+
+                    android:id="@+id/textBirth"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bdg_loginpassword"
+                    android:gravity="center_vertical"
+                    android:hint="Year of Birth"
+                    android:inputType="number"
+                    android:padding="4dp"
+                    android:textSize="25dp" />
+
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="335dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
             <EditText
-                android:layout_margin="8dp"
                 android:padding="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bdg_loginpassword"
+                android:textSize="25dp"
                 android:gravity="center_vertical"
                 android:id="@+id/textCountry"
                 android:hint="Country" />
 
+            </android.support.design.widget.TextInputLayout>
+
+            <android.support.design.widget.TextInputLayout
+                android:layout_width="335dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
+
             <EditText
-                android:layout_margin="8dp"
                 android:padding="4dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/bdg_loginpassword"
+                android:textSize="25dp"
                 android:gravity="center_vertical"
-
-
                 android:id="@+id/textCity"
                 android:hint="City" />
+
+            </android.support.design.widget.TextInputLayout>
 
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>

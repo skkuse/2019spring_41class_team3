@@ -215,7 +215,14 @@ public class AccountFragment extends Fragment {
                 Log.d("onDataChange", "Data is Updated");
 
                 Userfirebase get = dataSnapshot.getValue(Userfirebase.class);
-                String[] info = {get.user_email, get.user_name, get.user_birth, get.user_gender, get.user_country, get.user_city};
+                userName.setText(get.user_name);
+                userBirth.setText(String.valueOf(get.user_birth));
+                userCity.setText(get.user_city);
+                userCountry.setText(get.user_country);
+                if (get.user_gender == "femlae")
+                    {femaleButton.setChecked(true);}
+                else {maleButton.setChecked(true);}
+
 
 
 
