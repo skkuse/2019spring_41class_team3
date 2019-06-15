@@ -52,7 +52,6 @@
                     android:textColor="@android:color/black"
                     android:textSize="18dp" />
 
-
                 <ImageButton
                     android:id="@+id/heartbutton"
                     android:layout_width="20dp"

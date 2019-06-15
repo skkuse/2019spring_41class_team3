@@ -243,6 +243,14 @@ public class AccountFragment extends Fragment {
         mPostReference.child("Users").child(UID).addValueEventListener(postListener);
     }
 
+    public void logoutUser(View view) {
+        mAuth.signOut();
+        Intent intent = new Intent(getContext(), LoginActivity.class);
+        startActivity(intent);
+        getActivity().finish();
+
+    }
+
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
