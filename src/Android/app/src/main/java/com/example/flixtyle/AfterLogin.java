@@ -92,7 +92,8 @@ public class AfterLogin extends AppCompatActivity {
         Map<String, Object> childUpdates = new HashMap<>();
         Map<String, Object> postValues = null;
         if(add){
-            Userfirebase post = new Userfirebase(UID, user_email, user_name, user_gender, user_birth, user_country, user_city);
+            long long_user_birth = Long.parseLong(user_birth);
+            Userfirebase post = new Userfirebase(UID, user_email, user_name, long_user_birth, user_gender, user_country, user_city);
             postValues = post.toMap();
         }
         childUpdates.put("/Users/" + UID, postValues);
