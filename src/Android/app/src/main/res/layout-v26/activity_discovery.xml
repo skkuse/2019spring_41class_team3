@@ -12,13 +12,11 @@
         android:layout_height="wrap_content"
         android:backgroundTint="#F2A9A5"
         android:fontFamily="@font/hanna"
-        android:onClick="logoutUser"
         android:text="Sign Out"
         android:textColor="#ffffff"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="@+id/frame"
         app:layout_constraintTop_toTopOf="@+id/frame" />
-
 
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/frame"
