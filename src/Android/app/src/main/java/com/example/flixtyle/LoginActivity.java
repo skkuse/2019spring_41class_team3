@@ -29,6 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,6 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     private Button mSignUp;
     private EditText mEmail;
     private EditText mPassword;
+    private ArrayList<String[]> list = new ArrayList<>();
+    private int flag = 0;
 
     private static final String TAG = "GoogleActivity";
     int RC_SIGN_IN = 0;
@@ -55,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mPostReference = FirebaseDatabase.getInstance().getReference();
-
+        flag = 0;
         // Configure Google Sign In
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken("498634721820-spic3fjcbgsb2gdkbmpsi9evquc55pm3.apps.googleusercontent.com")
@@ -85,6 +88,8 @@ public class LoginActivity extends AppCompatActivity {
         mSignUp=(Button)findViewById(R.id.signup_button);
         mLogin=(Button)findViewById(R.id.login_button) ;
         mLogin2=(SignInButton)findViewById(R.id.google_signin) ;
+
+        getFirebaseDatabase();
 
         mSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,20 +196,31 @@ public class LoginActivity extends AppCompatActivity {
                                 // The user's ID, unique to the Firebase project. Do NOT use this value to
                                 // authenticate with your backend server, if you have one. Use
                                 // FirebaseUser.getIdToken() instead.
+                                for(int j = 0 ; j < list.size(); j++){
+                                    if(UID.equals(list.get(j)[1])) {
 
-                                GoogleFirebase post = new GoogleFirebase(user_email, UID);
-
-                                Map<String, Object> childUpdates = new HashMap<>();
-                                Map<String, Object> postValues = null;
-
-                                postValues = post.toMap();
-                                childUpdates.put("/Users/" + UID, postValues);
-                                mPostReference.updateChildren(childUpdates);
-                                Intent intent= new Intent(LoginActivity.this, AfterLogin.class);
-                                intent.putExtra("UID", UID);
-                                startActivity(intent);
+                                        flag = 1;
+                                        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                        intent.putExtra("UID", UID);
+                                        startActivity(intent);
 
 
+                                        }
+                                    }
+                                if(flag ==0) {
+                                    GoogleFirebase post = new GoogleFirebase(user_email, UID);
+
+                                    Map<String, Object> childUpdates = new HashMap<>();
+                                    Map<String, Object> postValues = null;
+
+                                    postValues = post.toMap();
+                                    childUpdates.put("/Users/" + UID, postValues);
+                                    mPostReference.updateChildren(childUpdates);
+                                    Intent intent = new Intent(LoginActivity.this, AfterLogin.class);
+                                    intent.putExtra("UID", UID);
+                                    startActivity(intent);
+
+                                }
                             }
                         } else {
                             // If sign in fails, display a message to the user.
@@ -221,6 +237,34 @@ public class LoginActivity extends AppCompatActivity {
         super.onStop();
         mAuth.removeAuthStateListener(firebaseAuthStateListener);
     }
+
+
+
+    public void getFirebaseDatabase() {
+        final ValueEventListener postListener = new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) { //만약에 데이터가 추가되거나 삭제되거나 바뀌면 실행됨.
+                Log.d("onDataChange", "Data is Updated");
+                list.clear();
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) { //노드 다시 읽어서 추가
+                    String key = postSnapshot.getKey();
+                    GoogleFirebase get = postSnapshot.getValue(GoogleFirebase.class);
+                    list.add(new String[]{get.user_email, get.UID});
+
+
+                    Log.d("getFirebaseDatabase", "key: " + key);
+
+                }
+
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        mPostReference.child("Users").addValueEventListener(postListener); //id_list 의 서브트리부터 밑으로만 접근하겟다.
+    }
+
+
 }
 
 

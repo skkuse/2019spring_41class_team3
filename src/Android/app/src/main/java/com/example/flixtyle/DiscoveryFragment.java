@@ -139,32 +139,7 @@ public class DiscoveryFragment extends Fragment {
 
 
 
-/*
-        // Optionally add an OnItemClickListener
-        flingContainer.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClicked(int itemPosition, Object dataObject) {
-                Toast.makeText(contextRegister, "Heart!", Toast.LENGTH_SHORT).show();
-                Map<String, Object> childUpdates = new HashMap<>();
-                Map<String, Object> postValues = null;
 
-                image_url = al.get(j)[1];
-                item_name = al.get(j)[2];
-                item_url = al.get(j)[3];
-
-                DiscoveryFirebase post = new DiscoveryFirebase(image_url, item_name, item_url);
-                postValues = post.toMap();
-
-                String order_id = al.get(j)[0];
-
-
-                childUpdates.put("/User/" + UID + "/heart_list/"+order_id, postValues);
-                mPostReference.updateChildren(childUpdates);
-
-
-            }
-        });
-        */
         return view;
     }
 
@@ -341,38 +316,6 @@ public class DiscoveryFragment extends Fragment {
 }
 
 
-
-
-/*
-    public void getFirebaseDatabase() {
-        final ValueEventListener postListener = new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                Log.d("onDataChange", "Data is Updated");
-                al.clear();
-                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-                    String key = postSnapshot.getKey();
-                    DiscoveryFirebase get = postSnapshot.getValue(DiscoveryFirebase.class);
-                    String[] info = {key, get.imageUrl, get.itemName, get.itemUrl};
-                    al.add(new String[]{key, get.imageUrl, get.itemName, get.itemUrl});
-                    Log.d("getFirebaseDatabase", "key: " + key);
-                    Log.d("getFirebaseDatabase", "info: " + info[0] + info[1] + info[2] + info[3]);
-                }
-                arrayAdapter.clear();
-                arrayAdapter.addAll(al);
-                arrayAdapter.notifyDataSetChanged();
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-            }
-        };
-        mPostReference.child("items").addValueEventListener(postListener);
-    }
-
-}
-
-*/
 
 
 

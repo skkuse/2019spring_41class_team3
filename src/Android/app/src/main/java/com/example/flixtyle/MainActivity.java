@@ -13,11 +13,6 @@ import android.support.v7.app.AppCompatActivity;
 
 import android.view.MenuItem;
 
-import com.example.flixtyle.AccountFragment;
-import com.example.flixtyle.DiscoveryActivity;
-import com.example.flixtyle.R;
-import com.example.flixtyle.RecommedationFragment;
-
 
 public class MainActivity extends AppCompatActivity
         implements AccountFragment.OnFragmentInteractionListener, DiscoveryFragment.OnFragmentInteractionListener, RecommedationFragment.OnFragmentInteractionListener {
