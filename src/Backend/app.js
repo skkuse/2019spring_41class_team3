@@ -48,14 +48,23 @@ var databaseMiddleware =  function(req, res, next){
 }
 var authMiddleware = function(req, res, next) {
   req.auth = firebase.auth();
-  req.auth.verifyIdToken(req.headers.authorization.replace("Bearer ", ""))
-  .then(function(decodedToken) {
-    req.token = decodedToken;
-    next();
-  }).catch(function(error) {
-    console.error("Authentication failed");
-    next();
-  });
+  if(req.headers.authorization){
+    req.auth.verifyIdToken(req.headers.authorization.replace("Bearer ", ""))
+    .then(function(decodedToken) {
+      req.token = decodedToken;
+      next();
+    }).catch(function(error) {
+      console.error("Authentication failed");
+      next();
+    });
+  } else {
+    console.error("Request is not authenticated");
+    if(req.app.get('env') === 'development'){
+      req.token = {uid: "kOcru895A4Svq0M8tYygOND8jQb2"};
+      next();
+    }
+  }
+
 }
 //This actually couples the databaseMiddleware to the express app.
 app.use(databaseMiddleware);
@@ -68,6 +77,8 @@ app.use('/upload/', uploadRouter);
 app.use('/crawl/', crawlerRouter);
 app.use('/discovery/', discoveryRouter);
 app.use('/recommendation/', recommendationsRouter);
+// Run the recommendation job in 2 minute intervals
+require('./recommendationJob.js');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

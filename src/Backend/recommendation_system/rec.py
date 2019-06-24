@@ -1,15 +1,36 @@
+### By Miikael
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import warnings
-import csv
+import firebase_admin
+from firebase_admin import db
+import json
 
-#### Import csv file
 
-data = pd.read_csv("recommendation_system\\ratings.data")
+## Initialize Firebase and the variables
+
+app = firebase_admin.initialize_app()
+likeList = db.reference('/Discovery', app, "https://flixtyle.firebaseio.com").get()
+itemList = db.reference('/items', app, "https://flixtyle.firebaseio.com").get()
+userRef = db.reference('/Users', app, "https://flixtyle.firebaseio.com")
+userList = list(userRef.get().keys())
+
+itemList = list(itemList['topman'].keys()) + list(itemList['zara'].keys())
+
+
+## Set up the ratings array
+ratings = np.zeros((len(userList), len(itemList)))
+
+for i in likeList:
+    userIndex = userList.index(i)
+    for k in likeList[i]:
+        itemIndex = itemList.index(k)
+        ratings[userIndex][itemIndex] = 1 if likeList[i][k] == True else -1
+
 
 #### Setup the imported data
-ratings = np.transpose(data.values)
+ratings = ratings.transpose()
 R = np.copy(ratings)
 #### Array where [i, j] i corresponds to a item and j each users rating of the item
 #### This is a one-hot matrix where if the user has rated a item, the value in the
@@ -82,24 +103,22 @@ scores = np.dot(itemFeatures, np.transpose(userPreferences))
 scores[R==1] = 0
 scores = np.transpose(scores)
 
-itemIds = data.columns.tolist()
-userIds = data.index.tolist()
+
+itemIds = itemList
+userIds = userList
 sortedScores = []
+index = 0
+### This sorts the scores for every user, with the highest scores first, and
+### Saves the recommended items' ID to the database for every user under recommendations property
 for i in range(len(scores)):
     zips = sorted(zip(scores[i, :], itemIds), reverse=True)
-    userItems = [userIds[i]]
+    userItems = []
     for j, k in zips:
-        if (j > 0.0):
-            userItems.append(k)
-        else:
+        index += 1
+        ## 50 is the amount of recommendations saved in the system
+        if index > 50:
+            index = 0
+            userRef.child(userIds[i]).update({"recommendations": userItems})
             break
+        userItems.append(k)
     sortedScores.append(userItems)
-
-
-#### Write to csv
-with open('recommendation_system\\recommendations.csv', mode='w', newline='') as csv_file:
-    writer = csv.writer(csv_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
-
-    #### Write a line for every user
-    for i in sortedScores:
-        writer.writerow(i)
