@@ -72,7 +72,6 @@ public class AccountFragment extends Fragment {
         UID=mAuth.getCurrentUser().getUid();
         mPostReference = FirebaseDatabase.getInstance().getReference();
         HeartButton = (Button) view.findViewById(R.id.HeartButton);
-        ChangeButton = (Button) view.findViewById(R.id.ChangeButton);
 
         userName = view.findViewById(R.id.textName);
         maleButton = view.findViewById(R.id.buttonMale);
@@ -225,14 +224,6 @@ public class AccountFragment extends Fragment {
 
 
 
-
-                ChangeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent2 = new Intent(getActivity(), InfoChangeActivity.class);
-                        startActivity(intent2);
-                    }
-                });
 
 
             }

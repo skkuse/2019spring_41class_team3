@@ -15,6 +15,17 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
 
+        <TextView
+            android:padding="6dp"
+            android:id="@+id/d"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#F2A9A5"
+            android:text="Heart List"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+
+
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -32,17 +43,6 @@
 
 
     </LinearLayout>
-
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="match_parent"
-        android:layout_height="67dp"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@android:color/black"
-        app:itemTextColor="#F2A9A5"
-        app:layout_constraintBottom_toBottomOf="@+id/linearLayout"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:menu="@menu/navigation" />
 
 
 </android.support.constraint.ConstraintLayout>

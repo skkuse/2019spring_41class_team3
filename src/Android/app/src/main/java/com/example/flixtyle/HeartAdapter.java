@@ -35,10 +35,11 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
     private ArrayList<String[]> list = new ArrayList<>();
     private Random mRandom = new Random();
     private String UID, Heart_key;
-    private Integer i = 0;
+    private Integer i = 0, k = 0;
     private ItemClick itemClick;
+
     public interface ItemClick {
-        public void onClick(View view,int position);
+        public void onClick(View view, int position);
     }
 
     //아이템 클릭시 실행 함수 등록 함수
@@ -55,7 +56,6 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
         context = parent.getContext();
 
 
-
         return viewHolder;
     }
 
@@ -70,59 +70,63 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
                 .load(item.getUrl())
                 .into(viewHolder.ivHeart);
 
-        viewHolder.itemView.getLayoutParams().height = getRandomIntInRange(400,350);
+        viewHolder.itemView.getLayoutParams().height = getRandomIntInRange(400, 350);
         viewHolder.tvName.setText(item.getItemName());
 
 
         mPostReference = FirebaseDatabase.getInstance().getReference();
-        mAuth= FirebaseAuth.getInstance();
-        UID=mAuth.getCurrentUser().getUid();
+        mAuth = FirebaseAuth.getInstance();
+        UID = mAuth.getCurrentUser().getUid();
         i = 0;
         getFirebaseDatabase();
         final ImageButton heartButton = viewHolder.heartButton;
-        for(int j = 0 ; j < list.size(); j++) {
+        for (int j = 0; j < list.size(); j++) {
             if (item.getUrl().equals(list.get(j)[1])) {
-                    i = 1;
-                    heartButton.setImageResource(R.drawable.heart_after);
-                    final String heart_key = list.get(j)[0];
-                    heartButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            if(itemClick != null){
-                                itemClick.onClick(v, position);
-                                Map<String, Object> childUpdates = new HashMap<>();
-                                Map<String, Object> postValues = null;
-                                DiscoveryFirebase post = new DiscoveryFirebase(null, null, null);
-                                postValues = post.toMap();
-                                childUpdates.put("/Users/" + UID + "/heart_list/" + heart_key, postValues);
-                                mPostReference.updateChildren(childUpdates);
-                                Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-                }
-
+                i = 1;
+                Heart_key = list.get(j)[0];
+            }
         }
-        if (i == 0) {
+        if (HeartList.class.equals(context.getClass())) {
+            heartButton.setImageResource(R.drawable.heart_after);
+            heartButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClick != null) {
+                    itemClick.onClick(v, position);
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        Map<String, Object> postValues = null;
+                        DiscoveryFirebase post = new DiscoveryFirebase(null, null, null);
+                        postValues = post.toMap();
+                        childUpdates.put("/Users/" + UID + "/heart_list/" + Heart_key, postValues);
+                        mPostReference.updateChildren(childUpdates);
+                        Toast.makeText(v.getContext(), "unheart", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
+        if (MainActivity.class.equals(context.getClass())) {
             heartButton.setImageResource(R.drawable.heart_before);
             heartButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if (itemClick != null) {
                         itemClick.onClick(v, position);
-                        Map<String, Object> childUpdates = new HashMap<>();
-                        Map<String, Object> postValues = null;
-                        DiscoveryFirebase post = new DiscoveryFirebase(item.getUrl(), item.getItemName(), item.getitemUrl());
-                        postValues = post.toMap();
-                        String s = mPostReference.push().getKey();
-                        childUpdates.put("/Users/" + UID + "/heart_list/" + s, postValues);
-                        mPostReference.updateChildren(childUpdates);
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            Map<String, Object> postValues = null;
+                            DiscoveryFirebase post = new DiscoveryFirebase(item.getUrl(), item.getItemName(), item.getitemUrl());
+                            postValues = post.toMap();
+                            String s = mPostReference.push().getKey();
+                            childUpdates.put("/Users/" + UID + "/heart_list/" + s, postValues);
+                            mPostReference.updateChildren(childUpdates);
 
-                        Toast.makeText(v.getContext(), "heart", Toast.LENGTH_LONG).show();
-                    }
-                }
-            });
+                            Toast.makeText(v.getContext(), "heart", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+
+                    });
         }
+
 
 
         final String itemUrl =item.getitemUrl();
@@ -151,6 +155,7 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
 
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
                 Log.d("onDataChange", "Data is Updated");
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
                     DiscoveryFirebase get = postSnapshot.getValue(DiscoveryFirebase.class);
@@ -158,6 +163,7 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
                     list.add(new String[]{key, get.imageUrl, get.itemName, get.itemUrl});
                     Log.d("getFirebaseDatabase", "key: " + key);
                 }
+
             }
 
             @Override
