@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,17 +15,31 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> {
-
-    private ArrayList<HeartItem> items = new ArrayList<>();
     Context context;
-
+    private DatabaseReference mPostReference;
+    private FirebaseAuth mAuth;
+    private ArrayList<HeartItem> items = new ArrayList<>();
+    private ArrayList<String[]> list = new ArrayList<>();
+    private Random mRandom = new Random();
+    private String UID, Heart_key;
+    private Integer i = 0, k = 0;
     private ItemClick itemClick;
+
     public interface ItemClick {
-        public void onClick(View view,int position);
+        public void onClick(View view, int position);
     }
 
     //아이템 클릭시 실행 함수 등록 함수
@@ -41,38 +56,80 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
         context = parent.getContext();
 
 
-
         return viewHolder;
     }
 
     @Override
     public void onBindViewHolder(@NonNull HeartAdapter.ViewHolder viewHolder, final int position) {
 
-        HeartItem item = items.get(position);
+        double mRandom = Math.random();
+
+        final HeartItem item = items.get(position);
 
         Glide.with(viewHolder.itemView.getContext())
                 .load(item.getUrl())
                 .into(viewHolder.ivHeart);
 
+        viewHolder.itemView.getLayoutParams().height = getRandomIntInRange(400, 350);
         viewHolder.tvName.setText(item.getItemName());
-        final String itemUrl =item.getitemUrl();
+
+
+        mPostReference = FirebaseDatabase.getInstance().getReference();
+        mAuth = FirebaseAuth.getInstance();
+        UID = mAuth.getCurrentUser().getUid();
+        i = 0;
+        getFirebaseDatabase();
         final ImageButton heartButton = viewHolder.heartButton;
-        heartButton.setOnClickListener(new View.OnClickListener() {
-            int i= 1;
+        for (int j = 0; j < list.size(); j++) {
+            if (item.getUrl().equals(list.get(j)[1])) {
+                i = 1;
+                Heart_key = list.get(j)[0];
+            }
+        }
+        if (HeartList.class.equals(context.getClass())) {
+            heartButton.setImageResource(R.drawable.heart_after);
+            heartButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(itemClick != null){
+                if (itemClick != null) {
                     itemClick.onClick(v, position);
-                    if(i%2==1)
-                    {heartButton.setImageResource(R.drawable.heart_after);
-                        i++;}
-                    else
-                    { heartButton.setImageResource(R.drawable.heart_before);
-                        i--;  }
-                    Toast.makeText(v.getContext(),"heart", Toast.LENGTH_LONG).show();
-                }
+                        Map<String, Object> childUpdates = new HashMap<>();
+                        Map<String, Object> postValues = null;
+                        DiscoveryFirebase post = new DiscoveryFirebase(null, null, null);
+                        postValues = post.toMap();
+                        childUpdates.put("/Users/" + UID + "/heart_list/" + Heart_key, postValues);
+                        mPostReference.updateChildren(childUpdates);
+                        Toast.makeText(v.getContext(), "unheart", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
             }
-        });
+        if (MainActivity.class.equals(context.getClass())) {
+            heartButton.setImageResource(R.drawable.heart_before);
+            heartButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (itemClick != null) {
+                        itemClick.onClick(v, position);
+                            Map<String, Object> childUpdates = new HashMap<>();
+                            Map<String, Object> postValues = null;
+                            DiscoveryFirebase post = new DiscoveryFirebase(item.getUrl(), item.getItemName(), item.getitemUrl());
+                            postValues = post.toMap();
+                            String s = mPostReference.push().getKey();
+                            childUpdates.put("/Users/" + UID + "/heart_list/" + s, postValues);
+                            mPostReference.updateChildren(childUpdates);
+
+                            Toast.makeText(v.getContext(), "heart", Toast.LENGTH_LONG).show();
+
+                            }
+                        }
+
+                    });
+        }
+
+
+
+        final String itemUrl =item.getitemUrl();
         ImageView ivHeart = viewHolder.ivHeart;
         ivHeart.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -91,6 +148,37 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
 
 
     }
+
+
+    public void getFirebaseDatabase() {
+        final ValueEventListener postListener = new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                list.clear();
+                Log.d("onDataChange", "Data is Updated");
+                for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
+                    DiscoveryFirebase get = postSnapshot.getValue(DiscoveryFirebase.class);
+                    String key = postSnapshot.getKey();
+                    list.add(new String[]{key, get.imageUrl, get.itemName, get.itemUrl});
+                    Log.d("getFirebaseDatabase", "key: " + key);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+            }
+        };
+        mPostReference.child("Users").child(UID).child("heart_list").addValueEventListener(postListener);
+    }
+
+
+
+    protected int getRandomIntInRange(int max, int min){
+        return mRandom.nextInt((max-min)+min)+min;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -116,4 +204,6 @@ public class HeartAdapter extends RecyclerView.Adapter<HeartAdapter.ViewHolder> 
             mView = itemView;
         }
     }
+
+
 }

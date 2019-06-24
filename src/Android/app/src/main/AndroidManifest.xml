@@ -10,7 +10,6 @@
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".InfoChangeActivity"></activity>
         <activity android:name=".HeartList" />
         <activity android:name=".AfterLogin" />
         <activity android:name=".SignUpActivity" />
@@ -23,7 +22,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".DiscoveryActivity" />
     </application>
 
 </manifest>

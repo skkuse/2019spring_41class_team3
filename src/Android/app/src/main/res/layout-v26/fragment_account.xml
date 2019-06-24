@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".AccountFragment"
-    android:background="@color/colorPrimaryDark">
+    android:background="@color/colorPrimary">
 
     <Button
         android:layout_width="wrap_content"
@@ -20,151 +20,157 @@
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_marginBottom="20dp"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_marginBottom="20dp">
 
-        <Button
-            android:id="@+id/HeartButton"
-            android:layout_width="285dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginTop="3dp"
-            android:layout_marginEnd="27dp"
-            android:backgroundTint="#FEAE8B"
-            android:text="Heart list"
-            android:textColor="#ffffff"
-            android:textSize="30dp"
-            android:textStyle="bold"
-            android:fontFamily="@font/hanna"
-            android:background="#F2D2C2"
+        <ScrollView
+            android:id="@+id/scrollView2"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ChangeButton" />
+            app:layout_constraintTop_toTopOf="parent">
 
-        <Button
-            android:visibility="gone"
-            android:id="@+id/ChangeButton"
-            android:layout_width="285dp"
-            android:layout_height="53dp"
-            android:layout_marginStart="27dp"
-            android:layout_marginEnd="27dp"
-            android:layout_marginBottom="248dp"
-            android:backgroundTint="#F2A9A5"
-            android:fontFamily="@font/hanna"
-            android:text="Change"
-            android:textColor="#ffffff"
-            android:textStyle="bold"
-            android:textSize="30dp"
-            android:background="@color/colorAccent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/account_info_container" />
-
-        <LinearLayout
-            android:id="@+id/account_info_container"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            app:layout_constraintTop_toTopOf="parent"
-            android:padding="48dp">
-            <EditText
-                android:layout_margin="8dp"
-                android:padding="4dp"
+            <LinearLayout
+                android:id="@+id/account_info_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
-                android:id="@+id/textName"
-                android:hint="Name"
-                android:inputType="textPersonName"/>
+                android:layout_marginTop="80dp"
+                android:orientation="vertical"
+                android:padding="48dp"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <RadioGroup
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
-                android:weightSum="2"
-                android:orientation="horizontal">
-                <RadioButton
-                    android:padding="4dp"
-                    android:layout_width="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/hanna"
-                    android:textColor="#FEAE8B"
-                    android:textSize="30dp"
-                    android:gravity="center_vertical"
-                    android:id="@+id/buttonMale"
-                    android:buttonTint="@color/colorPrimaryDark"
-                    android:layout_weight="1"
-                    android:layout_margin="0dp"
-                    android:text="Male"
-                    android:layout_height="match_parent" />
-                <RadioButton
-                    android:padding="4dp"
-                    android:layout_width="wrap_content"
-                    android:background="@color/colorPrimary"
-                    android:fontFamily="@font/hanna"
-                    android:textColor="#FEAE8B"
-                    android:textSize="30dp"
-                    android:gravity="center_vertical"
-                    android:id="@+id/buttonFemale"
-                    android:layout_weight="1"
-                    android:layout_margin="0dp"
-                    android:text="Female"
-                    android:layout_height="match_parent" />
-            </RadioGroup>
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
-            <EditText
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
-                android:id="@+id/textBirth"
-                android:hint="Year of Birth"
-                android:inputType="number"/>
+                    <EditText
+                        android:id="@+id/textName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bdg_loginpassword"
+                        android:gravity="center_vertical"
+                        android:hint="Name"
+                        android:inputType="textPersonName"
+                        android:padding="6dp"
+                        android:textSize="25dp" />
 
-            <EditText
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
-                android:id="@+id/textCountry"
-                android:hint="Country" />
-
-            <EditText
-                android:layout_margin="8dp"
-                android:padding="4dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorPrimary"
-                android:fontFamily="@font/hanna"
-                android:textColor="#FEAE8B"
-                android:textSize="30dp"
-                android:gravity="center_vertical"
+                </android.support.design.widget.TextInputLayout>
 
 
-                android:id="@+id/textCity"
-                android:hint="City" />
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
 
-        </LinearLayout>
+                    <RadioGroup
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bdg_loginpassword"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:padding="6dp"
+                        android:textSize="20dp"
+                        android:weightSum="5">
+
+                        <RadioButton
+                            android:id="@+id/buttonMale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_margin="0dp"
+                            android:layout_weight="2"
+                            android:background="@drawable/bdg_loginpassword"
+                            android:gravity="center_vertical"
+                            android:padding="4dp"
+                            android:text="Male"
+                            android:textSize="20dp" />
+
+                        <RadioButton
+                            android:id="@+id/buttonFemale"
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:layout_weight="3"
+                            android:background="@drawable/bdg_loginpassword"
+                            android:gravity="center_vertical"
+                            android:padding="4dp"
+                            android:text="Female"
+                            android:textSize="20dp" />
+                    </RadioGroup>
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/textBirth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bdg_loginpassword"
+                        android:gravity="center_vertical"
+                        android:hint="Year of Birth"
+                        android:inputType="number"
+                        android:padding="6dp"
+                        android:textSize="25dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/textCountry"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/bdg_loginpassword"
+                        android:gravity="center_vertical"
+                        android:hint="Country"
+                        android:padding="6dp"
+                        android:textSize="25dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="335dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp">
+
+                    <EditText
+                        android:id="@+id/textCity"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/bdg_loginpassword"
+                        android:gravity="center_vertical"
+                        android:hint="City"
+                        android:padding="6dp"
+                        android:textSize="25dp" />
+
+                </android.support.design.widget.TextInputLayout>
+
+                <Button
+                    android:id="@+id/HeartButton"
+                    android:layout_width="285dp"
+                    android:layout_height="53dp"
+                    android:layout_gravity="center"
+                    android:backgroundTint="#F2A9A5"
+                    android:text="Heart list"
+                    android:textColor="#ffffff"
+                    android:textSize="20dp"
+                    android:textStyle="bold"
+                    android:visibility="visible"
+                    tools:layout_editor_absoluteX="88dp"
+                    tools:layout_editor_absoluteY="546dp"
+                    android:layout_marginTop="40dp"/>
+
+            </LinearLayout>
+        </ScrollView>
+
     </android.support.constraint.ConstraintLayout>
 
 </FrameLayout>

@@ -72,7 +72,6 @@ public class AccountFragment extends Fragment {
         UID=mAuth.getCurrentUser().getUid();
         mPostReference = FirebaseDatabase.getInstance().getReference();
         HeartButton = (Button) view.findViewById(R.id.HeartButton);
-        ChangeButton = (Button) view.findViewById(R.id.ChangeButton);
 
         userName = view.findViewById(R.id.textName);
         maleButton = view.findViewById(R.id.buttonMale);
@@ -215,17 +214,16 @@ public class AccountFragment extends Fragment {
                 Log.d("onDataChange", "Data is Updated");
 
                 Userfirebase get = dataSnapshot.getValue(Userfirebase.class);
-                String[] info = {get.user_email, get.user_name, get.user_birth, get.user_gender, get.user_country, get.user_city};
+                userName.setText(get.user_name);
+                userBirth.setText(String.valueOf(get.user_birth));
+                userCity.setText(get.user_city);
+                userCountry.setText(get.user_country);
+                if (get.user_gender == "femlae")
+                    {femaleButton.setChecked(true);}
+                else {maleButton.setChecked(true);}
 
 
 
-                ChangeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Intent intent2 = new Intent(getActivity(), InfoChangeActivity.class);
-                        startActivity(intent2);
-                    }
-                });
 
 
             }

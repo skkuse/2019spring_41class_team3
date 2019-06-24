@@ -11,7 +11,8 @@
     android:paddingLeft="40sp"
     android:paddingTop="20sp"
     android:paddingRight="40sp"
-    android:paddingBottom="20sp">
+    android:paddingBottom="20sp"
+    android:background="#fceae6">>
 
     <android.support.v7.widget.CardView
         android:id="@+id/cardView"

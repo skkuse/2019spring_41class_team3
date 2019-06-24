@@ -2,35 +2,47 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
+    android:layout_width="fill_parent"
     android:layout_height="match_parent"
-    android:background="#fceae6"
     tools:context=".HeartList">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view"
-        app:layoutManager="android.support.v7.widget.GridLayoutManager"
-        app:spanCount="2"
-        android:layout_width="360dp"
-        android:layout_height="599dp"
-        android:layout_marginTop="52dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent">
 
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/navigation"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:background="?android:attr/windowBackground"
-        app:itemIconTint="@android:color/black"
-        app:itemTextColor="#F2A9A5"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:menu="@menu/navigation" />
+
+        <TextView
+            android:padding="6dp"
+            android:id="@+id/d"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:background="#F2A9A5"
+            android:text="Heart List"
+            android:textColor="#ffffff"
+            android:textSize="25sp" />
+
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            </android.support.v7.widget.RecyclerView>
+
+
+        </ScrollView>
+
+
+    </LinearLayout>
 
 
 </android.support.constraint.ConstraintLayout>
